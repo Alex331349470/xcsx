@@ -14,7 +14,7 @@ class AddCarIdToSellItems extends Migration
     public function up()
     {
         Schema::table('sell_items', function (Blueprint $table) {
-            $table->integer('car_id')->default(0)->after('id')->comment('车辆id');
+            $table->integer('car_id')->nullable()->after('id')->comment('车辆id');
         });
     }
 
