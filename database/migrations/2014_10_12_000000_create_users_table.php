@@ -15,10 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('name')->nullable()->comment('微信昵称');
+            $table->string('phone')->nullable()->comment('手机号');
+            $table->string('avatar')->nullable()->comment('微信头像');
+            $table->string('open_id')->nullable()->comment('微信openid');
             $table->rememberToken();
             $table->timestamps();
         });
