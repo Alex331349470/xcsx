@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AuthorizationsController extends Controller
 {
+
+    public function __construct()
+    {
+
+    }
+
     public function store(AuthorizationRequest $request)
     {
 
