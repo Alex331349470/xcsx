@@ -16,6 +16,7 @@ class CreateCarsTable extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->integer('driver_school_id')->index()->comment('外键驾校id');
+            $table->string('serial_num')->nullable()->comment('车辆序列号');
             $table->integer('sell_item_id')->index()->comment('外键套餐id');
             $table->string('name')->comment('车辆名称');
             $table->boolean('status')->default(false)->comment('车辆是否正在使用');

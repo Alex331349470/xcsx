@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserInfo extends Model
 {
-    protected $fillable = [];
+    protected $fillable = ['user_id', 'driver_school_id', 'total_account', 'left_money', 'is_vip'];
 
     public function user()
     {
