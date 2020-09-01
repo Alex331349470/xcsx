@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\AuthorizationRequest;
 use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
 use Overtrue\LaravelSocialite\Socialite;
 
 class AuthorizationsController extends Controller
@@ -13,6 +14,10 @@ class AuthorizationsController extends Controller
        $driver = Socialite::driver('wechat');
 
        $accessToken = $driver->getAccessToken($request->code);
+
+       if (!$accessToken) {
+           throw new AuthenticationException('code不正确!');
+       }
 
        $oauthUser = $driver->user($accessToken);
 
