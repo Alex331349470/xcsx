@@ -12,9 +12,9 @@ class AuthorizationsController extends Controller
     {
        $driver = Socialite::driver('wechat');
 
-       $token = $driver->getAccessToken($request->code);
+       $accessToken = $driver->getAccessToken($request->code);
 
-       $oauthUser = $driver->user($token);
+       $oauthUser = $driver->user($accessToken);
 
        if (!$user = User::where('open_id', $oauthUser->getId())->first()) {
            $user = User::create([
@@ -22,11 +22,11 @@ class AuthorizationsController extends Controller
                'avatar' => $oauthUser->getAvatar(),
                'open_id' => $oauthUser->getId(),
            ]);
-
-           $accessToken = auth('api')->login($user);
-
-           return $this->responseWithToken($accessToken);
        }
+
+        $token = auth('api')->login($user);
+
+        return $this->responseWithToken($token);
 
     }
 
