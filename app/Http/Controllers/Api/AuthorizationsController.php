@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\AuthorizationRequest;
 use http\Client\Curl\User;
-use Overtrue\Socialite\SocialiteManager;
+use Overtrue\LaravelSocialite\Socialite;
 
 class AuthorizationsController extends Controller
 {
     public function store(AuthorizationRequest $request)
     {
-       $driver = SocialiteManager::driver('wechat');
+       $driver = Socialite::driver('wechat');
 
        $token = $driver->getAccessToken($request->code);
 
