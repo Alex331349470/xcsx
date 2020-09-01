@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\AuthorizationRequest;
-use http\Client\Curl\User;
+use App\Models\User;
 use Overtrue\LaravelSocialite\Socialite;
 
 class AuthorizationsController extends Controller
