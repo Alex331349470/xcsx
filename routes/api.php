@@ -22,9 +22,14 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.sign'))
             ->group(function () {
+                //api版本
               Route::get('version', function (){
                   return 'this is version 1';
               })->name('version');
+
+              //微信登录
+                Route::post('authorization', 'AuthorizationsController@store')
+                    ->name('authorization.store');
             });
 
         Route::middleware('throttle:' . config('api.rate_limits.access'))
