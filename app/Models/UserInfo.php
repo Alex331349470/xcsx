@@ -12,4 +12,9 @@ class UserInfo extends Model
     {
         $this->belongsTo(User::class);
     }
+
+    public function driverSchool()
+    {
+        $this->hasOne(DriverSchool::class);
+    }
 }

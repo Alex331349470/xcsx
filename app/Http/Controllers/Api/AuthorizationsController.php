@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\AuthorizationRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Auth\AuthenticationException;
 use Overtrue\LaravelSocialite\Socialite;
 use PhpParser\Node\Expr\Throw_;
@@ -29,6 +31,12 @@ class AuthorizationsController extends Controller
                 'name' => $oauthUser->getNickname(),
                 'avatar' => $oauthUser->getAvatar(),
                 'open_id' => $oauthUser->getId(),
+                'phone' => $request->phone,
+            ]);
+
+            UserInfo::create([
+                'user_id' => $user->id,
+                'driver_school_id' => $request->driver_school_id,
             ]);
         }
 
@@ -36,6 +44,21 @@ class AuthorizationsController extends Controller
 
         return $this->responseWithToken($token);
 
+    }
+
+
+    public function update()
+    {
+        $token = auth('api')->refresh();
+
+        return $this->responseWithToken($token);
+    }
+
+    public function destroy()
+    {
+        auth('api')->logout();
+
+        return response(null, 204);
     }
 
     protected function responseWithToken($token)

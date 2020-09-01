@@ -14,7 +14,9 @@ class AuthorizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string'
+            'code' => 'required|string',
+            'phone' => 'required',
+            'driver_school_id' => 'required'
         ];
     }
 }

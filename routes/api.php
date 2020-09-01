@@ -23,17 +23,30 @@ Route::prefix('v1')
         Route::middleware('throttle:' . config('api.rate_limits.sign'))
             ->group(function () {
                 //api版本
-              Route::get('version', function (){
-                  return 'this is version 1';
-              })->name('version');
+                Route::get('version', function () {
+                    return 'this is version 1';
+                })->name('version');
 
-              //微信登录
-                Route::post('authorization', 'AuthorizationsController@store')
+                //微信登录
+                Route::post('authorizations', 'AuthorizationsController@store')
                     ->name('authorization.store');
+
+                //刷新token
+                Route::put('authorizations/current' . 'AuthorizationsController@update')
+                    ->name('authorizations.update');
+
+                //删除token
+                Route::delete('authorizations/current', 'AuthorizationsController@destroy')
+                    ->name('authorizations.destroy');
             });
 
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
-
+                //非Authorization的api
+                Route::middleware('auth.api')->group(function (){
+                    //用户信息
+                    Route::get('user', 'UsersController@me')
+                        ->name('user.show');
+                });
             });
     });
