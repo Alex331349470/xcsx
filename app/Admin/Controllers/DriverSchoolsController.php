@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\User;
+use App\Models\DriverSchool;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class UsersController extends AdminController
+class DriverSchoolsController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '用户';
+    protected $title = 'App\Models\DriverSchool';
 
     /**
      * Make a grid builder.
@@ -24,13 +24,12 @@ class UsersController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new User());
+        $grid = new Grid(new DriverSchool());
 
-        $grid->id('ID');
-        $grid->name('用户名');
-        $grid->phone('手机号');
-        $grid->avatar('用户头像');
-        $grid->open_id('用户openid');
+        $grid->column('id', __('Id'));
+        $grid->column('name', __('Name'));
+        $grid->column('created_at', __('Created at'));
+        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }
@@ -43,14 +42,10 @@ class UsersController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(User::findOrFail($id));
+        $show = new Show(DriverSchool::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
-        $show->field('phone', __('Phone'));
-        $show->field('avatar', __('Avatar'));
-        $show->field('open_id', __('Open id'));
-        $show->field('remember_token', __('Remember token'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -64,13 +59,9 @@ class UsersController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new User());
+        $form = new Form(new DriverSchool());
 
         $form->text('name', __('Name'));
-        $form->mobile('phone', __('Phone'));
-        $form->image('avatar', __('Avatar'));
-        $form->text('open_id', __('Open id'));
-        $form->text('remember_token', __('Remember token'));
 
         return $form;
     }

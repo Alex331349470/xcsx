@@ -42,11 +42,18 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
+                Route::post('car/control', 'CarsController@controlCar')
+                    ->name('car.control');
                 //非Authorization的api
-                Route::middleware('auth.api')->group(function (){
+                Route::middleware('auth:api')->group(function (){
                     //用户信息
                     Route::get('user', 'UsersController@me')
                         ->name('user.show');
+
+                    Route::get('cars','CarsController@index');
+
+//                    Route::post('car/control', 'CarsController@controlCar')
+//                        ->name('car.control');
                 });
             });
     });
