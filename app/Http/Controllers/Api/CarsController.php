@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class CarsController extends Controller
 {
+    public function index()
+    {
+        $cars = Car::paginate(10);
+
+        return new CarResource($cars);
+    }
+
     public function show(Car $car)
     {
         return new CarResource($car->where('serial_num', $car->serial_num)->first());

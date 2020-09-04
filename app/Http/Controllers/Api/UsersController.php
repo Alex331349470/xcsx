@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
     public function me(Request $request)
     {
-        $user = User::query()->whereId($request->user()->id)->with('userInfo','userInfo.driverSchool')->first();
+        $user = User::query()->whereId($request->user()->id)->with('userInfo')->first();
 
         return new UserResource($user);
     }
