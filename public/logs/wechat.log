@@ -1,0 +1,16 @@
+2020-09-12T12:37:50.987104+08:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"0ZzOTCXHgznjeKqY","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.1","out_trade_no":1599885470,"total_fee":"1","body":"test body - 测试","openid":"onkVf1FjWS5SBIixxxxxxx","trade_type":"JSAPI","sign":"D383D5CB5062AE27A82457053E53F8AD"}] 
+
+2020-09-12T12:38:36.875030+08:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"5adXr1uNEPqd2ds3","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.1","out_trade_no":1599885516,"total_fee":"1","body":"test body - 测试","openid":"onkVf1FjWS5SBIixxxxxxx","trade_type":"JSAPI","sign":"ED0C99751BCA64EC56D6756D53754B21"}] 
+
+2020-09-12T12:38:50.457293+08:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"bF1TOOQ9xlmbMWeE","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.1","out_trade_no":1599885530,"total_fee":"1","body":"test body - 测试","trade_type":"JSAPI","sign":"9C31EF2A5FDC16A3F3698AE7E93B2F42"}] 
+
+2020-09-12T12:52:36.901444+08:00 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"OyoikylDRIzwk9ga","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.10","out_trade_no":1599886356,"total_fee":"1","body":"test body - 测试","openid":"otSh7szfR7tBPNcNzk45CgZUgdW4","trade_type":"NATIVE"}] 
+
+2020-09-12T12:52:36.903066+08:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"OyoikylDRIzwk9ga","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.10","out_trade_no":1599886356,"total_fee":"1","body":"test body - 测试","openid":"otSh7szfR7tBPNcNzk45CgZUgdW4","trade_type":"NATIVE","sign":"6DAC22B6244EB31D2CE42F8296E064C8"}] 
+
+2020-09-12T13:38:45.499693+08:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"VhRwTh3wmNL4zsJm","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.1","out_trade_no":1599889125,"total_fee":"1","body":"test body - 测试","openid":"otSh7szfR7tBPNcNzk45CgZUgdW4","trade_type":"JSAPI","sign":"05957040A8DB804A8C6F5A3FA64DE4BF"}] 
+
+2020-09-12T13:45:20.085228+08:00 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"yOui5Du7155HIcer","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.10","out_trade_no":1599889520,"total_fee":"1","body":"test body - 测试","trade_type":"NATIVE"}] 
+
+2020-09-12T13:45:20.087112+08:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"wx060853c6aa6cdaee","mch_id":"1602211774","nonce_str":"yOui5Du7155HIcer","notify_url":"http://yanda.net.cn/notify.php","spbill_create_ip":"192.168.10.10","out_trade_no":1599889520,"total_fee":"1","body":"test body - 测试","trade_type":"NATIVE","sign":"B9DE4ACC3FC955A6AD82F894B9F38566"}] 
+
