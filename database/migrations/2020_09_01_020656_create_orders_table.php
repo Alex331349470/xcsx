@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->mediumInteger('left_time')->default(0)->comment('剩余时间/秒');
             $table->decimal('income')->default(0)->comment('收入');
             $table->dateTime('paid_at')->nullable()->comment('支付日期');
-            $table->string('payment_num')->nullable()->comment('支付流水号');
+            $table->string('payment_no')->nullable()->comment('支付流水号');
             $table->timestamps();
         });
     }

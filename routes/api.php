@@ -53,6 +53,9 @@ Route::prefix('v1')
 
                     Route::post('car/control', 'CarsController@controlCar')
                         ->name('car.control');
+
+                    Route::get('payment/{order}/wechat', 'PaymentsController@payBywechat')
+                        ->name('payment.wechat');
                 });
             });
     });
