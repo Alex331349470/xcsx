@@ -42,7 +42,7 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
-                Route::get('/payment/wechat', 'PaymentsController@index');
+                Route::get('/payment/wechat', 'PaymentsController@payByWechat');
                 //非Authorization的api
                 Route::middleware('auth:api')->group(function () {
                     //用户信息
@@ -54,8 +54,8 @@ Route::prefix('v1')
                     Route::post('car/control', 'CarsController@controlCar')
                         ->name('car.control');
 
-                    Route::get('payment/{order}/wechat', 'PaymentsController@payBywechat')
-                        ->name('payment.wechat');
+//                    Route::get('payment/{order}/wechat', 'PaymentsController@payBywechat')
+//                        ->name('payment.wechat');
                 });
             });
     });
