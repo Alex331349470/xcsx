@@ -31,7 +31,7 @@ class ReturnsController extends Controller
             'payment_no' => $data->transaction_id,
         ]);
 
-        $this->afterPaid($order);
+//        $this->afterPaid($order);
         return app('wechat_pay')->success();
     }
 }

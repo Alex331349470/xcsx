@@ -18,8 +18,7 @@ class PaymentsController extends Controller
             'body' => '支付订单'.$test_num
         ]);
 
-        $qrCode = new QrCode($wechatOrder);
-        dd($qrCode);
+        $qrCode = new QrCode($wechatOrder->code_url);
 
         return response($qrCode->writeDataUri(),200);
     }
