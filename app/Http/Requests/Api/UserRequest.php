@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Api;
 
+use Illuminate\Foundation\Http\FormRequest;
 
-class AuthorizationRequest extends FormRequest
+class UserRequest extends FormRequest
 {
 
     /**
@@ -14,9 +15,7 @@ class AuthorizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required',
-            'password' => 'required',
-            'driver_school_id' => 'required'
+
         ];
     }
 }
