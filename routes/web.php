@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::any('wechat', 'WechatController@serve');
 
+Route::post('payment/wechat/notify', 'ReturnsController@wechatNotify')
+    ->name('payment.wechat.notify');
+

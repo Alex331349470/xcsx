@@ -16,5 +16,4 @@ Route::group([
     $router->resource('orders','OrdersController');
     $router->resource('sell_items','SellItemsController');
     $router->resource('driver_schools','DriverSchoolsController');
-    $router->resource('user_infos','UserInfosController');
 });
