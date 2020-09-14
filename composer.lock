@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4728f1814681fb034f3879cba63fdd0b",
+    "content-hash": "a6aab74c214ab45ac02ff4849603e8af",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1392,6 +1392,54 @@
             "time": "2019-07-01T23:21:34+00:00"
         },
         {
+            "name": "hanson/rainbow",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hanson/rainbow.git",
+                "reference": "83ff49841659534b6346d02bf521753b87b55c05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hanson/rainbow/zipball/83ff49841659534b6346d02bf521753b87b55c05",
+                "reference": "83ff49841659534b6346d02bf521753b87b55c05",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require-dev": {
+                "encore/laravel-admin": "^1.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Hanson\\Rainbow\\RainbowServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hanson\\Rainbow\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hanson",
+                    "email": "h@hanc.cc"
+                }
+            ],
+            "time": "2020-02-06T14:15:25+00:00"
+        },
+        {
             "name": "khanamiryan/qrcode-detector-decoder",
             "version": "1.0.3",
             "source": {
@@ -1446,6 +1494,53 @@
                 "zxing"
             ],
             "time": "2020-04-19T16:18:51+00:00"
+        },
+        {
+            "name": "laravel-admin-ext/geetest",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "storage/geetest",
+                "reference": "7b14c1df65a2323d831bc78686faa573f6a2ad28"
+            },
+            "require": {
+                "encore/laravel-admin": "~1.6",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Encore\\Admin\\Geetest\\GeetestServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Encore\\Admin\\Geetest\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "z-song",
+                    "email": "zosong@126.com"
+                }
+            ],
+            "description": "集成geetest到laravel-admin的登陆页面",
+            "homepage": "https://github.com/laravel-admin-ext/geetest",
+            "keywords": [
+                "extension",
+                "laravel-admin"
+            ],
+            "transport-options": {
+                "symlink": false
+            }
         },
         {
             "name": "laravel/framework",
@@ -9451,7 +9546,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "hanson/rainbow": 20,
+        "laravel-admin-ext/geetest": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

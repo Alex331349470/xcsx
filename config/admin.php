@@ -11,7 +11,9 @@ return [
     | login page.
     |
     */
-    'name' => '兴创盛祥训练车管理系统',
+    'name' => '兴创训练车系统',
+    'skin' => 'rainbow-white-blue',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +24,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>CAR</b> training',
+    'logo' => '<b>兴创</b>科技',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>Ct</b>',
+    'logo-mini' => '<b>兴创</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +87,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'car training',
+    'title' => '兴创科技',
 
     /*
     |--------------------------------------------------------------------------
@@ -311,7 +313,7 @@ return [
     | each page
     |
     */
-    'show_version' => true,
+    'show_version' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -321,7 +323,7 @@ return [
     | Whether to display the environment at the footer of each page
     |
     */
-    'show_environment' => true,
+    'show_environment' => false,
 
     /*
     |--------------------------------------------------------------------------

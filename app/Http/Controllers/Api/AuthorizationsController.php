@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\AuthorizationRequest;
 use App\Models\User;
-use App\Models\UserInfo;
 use Illuminate\Auth\AuthenticationException;
 
 class AuthorizationsController extends Controller

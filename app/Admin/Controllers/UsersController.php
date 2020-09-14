@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\DriverSchool;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -15,7 +16,7 @@ class UsersController extends AdminController
      *
      * @var string
      */
-    protected $title = '用户';
+    protected $title = 'App\Models\User';
 
     /**
      * Make a grid builder.
@@ -26,11 +27,14 @@ class UsersController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->id('ID');
-        $grid->name('用户名');
-        $grid->phone('手机号');
-        $grid->avatar('用户头像');
-        $grid->open_id('用户openid');
+        $grid->column('id', __('Id值'));
+        $grid->column('driver_school', __('所属驾校'))->display(function () {
+            return $name = DriverSchool::query()->where('id', $this->driver_school_id)->first()->name;
+        });
+        $grid->column('name', __('姓名'));
+        $grid->column('phone', __('手机号'));
+        $grid->column('email', __('邮箱地址'));
+        $grid->column('address', __('运营地址'));
 
         return $grid;
     }
@@ -45,14 +49,16 @@ class UsersController extends AdminController
     {
         $show = new Show(User::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('phone', __('Phone'));
-        $show->field('avatar', __('Avatar'));
-        $show->field('open_id', __('Open id'));
-        $show->field('remember_token', __('Remember token'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('id', __('Id值'));
+        $show->field('driver_school', __('所属学校'))->as(function (){
+            return $name = DriverSchool::query()->where('id',$this->driver_school_id)->first()->name;
+        });
+        $show->field('name', __('姓名'));
+        $show->field('phone', __('手机号'));
+        $show->field('email', __('邮箱地址'));
+        $show->field('address', __('运营地址'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -66,12 +72,18 @@ class UsersController extends AdminController
     {
         $form = new Form(new User());
 
-        $form->text('name', __('Name'));
-        $form->mobile('phone', __('Phone'));
-        $form->image('avatar', __('Avatar'));
-        $form->text('open_id', __('Open id'));
-        $form->text('remember_token', __('Remember token'));
+        $driver_school_lv1 = DriverSchool::query()->get(['id','name'])->pluck('name','id');
+        $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
+        $form->text('name', __('姓名'));
+        $form->mobile('phone', __('手机号'));
+        $form->email('email', __('邮箱地址'));
+        $form->text('address', __('运营地址'));
+        $form->password('password', __('密码'));
 
+        $form->saving(function (Form $form){
+            $form->password = bcrypt($form->password);
+        });
+        
         return $form;
     }
 }

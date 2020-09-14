@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Car;
+use App\Models\DriverSchool;
+use Doctrine\DBAL\Driver;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -15,7 +17,7 @@ class CarsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Car';
+    protected $title = '车辆管理';
 
     /**
      * Make a grid builder.
@@ -27,14 +29,24 @@ class CarsController extends AdminController
         $grid = new Grid(new Car());
 
         $grid->column('id', __('Id'));
-        $grid->column('driver_school_id', __('Driver school id'));
-        $grid->column('serial_num', __('Serial num'));
-        $grid->column('sell_item_id', __('Sell item id'));
-        $grid->column('name', __('Name'));
-        $grid->column('status', __('Status'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('driver_school', __('所属驾校'))->display(function (){
+            $driverSchool = DriverSchool::query()->whereId($this->driver_school_id)->first();
+            return $driverSchool->name;
+        });
 
+        $grid->column('serial_num', __('车辆标识码'));
+        $grid->column('name', __('车辆名称'));
+        $grid->column('status', __('车辆状态'))->display(function ($value){
+            if ($value == 1) {
+                return '运行';
+            } else {
+                return '停止';
+            }
+        });
+        $grid->column('start', __('开始时间'));
+        $grid->column('end', __('结束时间'));
+
+        $grid->disableExport();
         return $grid;
     }
 
@@ -48,14 +60,17 @@ class CarsController extends AdminController
     {
         $show = new Show(Car::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('driver_school_id', __('Driver school id'));
-        $show->field('serial_num', __('Serial num'));
-        $show->field('sell_item_id', __('Sell item id'));
-        $show->field('name', __('Name'));
-        $show->field('status', __('Status'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('id', __('Id值'));
+        $show->field('driver_school', __('所属驾校'))->as(function (){
+            $name = DriverSchool::query()->where('id',$this->driver_school_id)->first()->name;
+            return $name;
+        });
+        $show->field('name', __('车辆名称'));
+        $show->field('status', __('车辆状态'));
+        $show->field('start', __('开始时间'));
+        $show->field('end', __('结束时间'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -69,11 +84,10 @@ class CarsController extends AdminController
     {
         $form = new Form(new Car());
 
-        $form->number('driver_school_id', __('Driver school id'));
-        $form->text('serial_num', __('Serial num'));
-        $form->number('sell_item_id', __('Sell item id'));
-        $form->text('name', __('Name'));
-        $form->switch('status', __('Status'));
+        $driver_school_lv1 = DriverSchool::query()->get(['id','name'])->pluck('name','id');
+        $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
+        $form->text('serial_num', __('车辆标识码'))->rules('required');
+        $form->text('name', __('车辆名称'))->rules('required|string|min:3');
 
         return $form;
     }

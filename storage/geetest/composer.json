@@ -29,17 +29,5 @@
                 "Encore\\Admin\\Geetest\\GeetestServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "storage/geetest",
-            "options": {
-                "symlink": false
-            }
-        }
-    ]
-
+    }
 }

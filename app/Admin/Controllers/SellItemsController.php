@@ -15,7 +15,7 @@ class SellItemsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\SellItem';
+    protected $title = '套餐管理';
 
     /**
      * Make a grid builder.
@@ -26,13 +26,10 @@ class SellItemsController extends AdminController
     {
         $grid = new Grid(new SellItem());
 
-        $grid->column('id', __('Id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('time', __('Time'));
-        $grid->column('name', __('Name'));
-        $grid->column('price', __('Price'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', __('Id值'));
+        $grid->column('time', __('时间(秒)'));
+        $grid->column('name', __('套餐名称'));
+        $grid->column('price', __('价格'));
 
         return $grid;
     }
@@ -47,13 +44,11 @@ class SellItemsController extends AdminController
     {
         $show = new Show(SellItem::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('user_id', __('User id'));
-        $show->field('time', __('Time'));
-        $show->field('name', __('Name'));
-        $show->field('price', __('Price'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('time', __('时间(秒)'));
+        $show->field('name', __('套餐名称'));
+        $show->field('price', __('价格'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -67,10 +62,9 @@ class SellItemsController extends AdminController
     {
         $form = new Form(new SellItem());
 
-        $form->number('user_id', __('User id'));
-        $form->number('time', __('Time'));
-        $form->text('name', __('Name'));
-        $form->decimal('price', __('Price'))->default(0.00);
+        $form->number('time', __('时间(秒)'));
+        $form->text('name', __('套餐名称'));
+        $form->decimal('price', __('价格'))->default(0.00);
 
         return $form;
     }

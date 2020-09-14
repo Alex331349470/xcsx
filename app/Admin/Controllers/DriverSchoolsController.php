@@ -15,7 +15,7 @@ class DriverSchoolsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\DriverSchool';
+    protected $title = '驾校管理';
 
     /**
      * Make a grid builder.
@@ -26,10 +26,8 @@ class DriverSchoolsController extends AdminController
     {
         $grid = new Grid(new DriverSchool());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', __('Id值'));
+        $grid->column('name', __('学校名称'));
 
         return $grid;
     }
@@ -44,10 +42,9 @@ class DriverSchoolsController extends AdminController
     {
         $show = new Show(DriverSchool::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('name', __('学校名称'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -61,7 +58,7 @@ class DriverSchoolsController extends AdminController
     {
         $form = new Form(new DriverSchool());
 
-        $form->text('name', __('Name'));
+        $form->text('name', __('学校名称'))->required();
 
         return $form;
     }
