@@ -21,11 +21,12 @@ class CarsController extends Controller
 
     public function index()
     {
-        $cars = Car::paginate(10);
+        $cars = Car::query()->with('school')->paginate(10);
 
         foreach ($cars as $car) {
             $this->dispatch(new CarStatus($car));
         }
+
         return new CarResource($cars);
     }
 

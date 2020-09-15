@@ -57,7 +57,8 @@ Route::prefix('v1')
                 Route::post('car/control', 'CarsController@controlCar')
                     ->name('car.control');
 
-
+                Route::get('test', 'TestsController@test')
+                    ->name('test');
                 //非Authorization的api
                 Route::middleware('auth:api')->group(function () {
                     //用户信息
