@@ -55,6 +55,7 @@ class OrdersController extends Controller
 
         $order->update([
             'left_time' => $time,
+
         ]);
 
         return response(null,200);
