@@ -36,7 +36,7 @@ class ControlCar
         $client = new Client();
         $dechexTime = str_pad(dechex($time), 4, 0, STR_PAD_LEFT);
 
-        $msg = 'e10401' . '00' . $dechexTime;
+        $msg = 'e10401' . '01' . $dechexTime;
 
         $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
             'query' => [
