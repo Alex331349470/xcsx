@@ -19,13 +19,13 @@ class WechatController extends Controller
     {
         $app = Factory::officialAccount(config('wechat.official_account.default'));
         $menu = [
+
             [
-                [
-                    "type" => "view",
-                    "name" => "训练车系统",
-                    "url"  => "http://car.agelove.cn/admin"
-                ],
-            ]
+                "type" => "view",
+                "name" => "训练车系统",
+                "url" => "http://car.agelove.cn/admin"
+            ],
+            
         ];
 
         $app->menu->create($menu);
