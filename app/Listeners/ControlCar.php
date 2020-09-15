@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OrderPaid;
+use App\Jobs\CarStatus;
 use App\Models\Car;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -23,12 +24,16 @@ class ControlCar
         $order = $event->getOrder();
 
         $car = Car::query()->where('id',$order->car_id)->first();
+
         $this->controlCar($order->left_time, $car->serial_num);
+
         $car->update([
             'status' => true,
             'start' => Carbon::now(),
             'end' => Carbon::now()->addSeconds($order->left_time),
         ]);
+
+        CarStatus::dispatch($car,$order->left_time);
     }
 
     protected function controlCar($time, $devId)

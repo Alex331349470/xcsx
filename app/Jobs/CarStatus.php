@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Car;
+use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,10 +22,13 @@ class CarStatus implements ShouldQueue
      */
 
     protected $car;
+    protected $order;
 
-    public function __construct(Car $car)
+    public function __construct(Car $car, Order $order, $delay)
     {
         $this->car = $car;
+        $this->order = $order;
+        $this->delay($delay);
     }
 
     /**
@@ -34,12 +38,18 @@ class CarStatus implements ShouldQueue
      */
     public function handle()
     {
-       $now = Carbon::now() ;
-       $get = $this->car->end;
-       if ($now->gte($get)) {
-           $this->car->update([
-               'status' => false,
-           ]);
-       }
+        $now = Carbon::now();
+        $get = $this->car->end;
+        if ($now->gte($get)) {
+            $this->car->update([
+                'status' => false,
+            ]);
+
+            $this->order->update([
+                'left_time' => 0,
+                'status' => false,
+            ]);
+        }
+
     }
 }

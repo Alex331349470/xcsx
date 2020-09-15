@@ -21,6 +21,8 @@
         "overtrue/laravel-lang": "~3.0",
         "overtrue/laravel-socialite": "~2.0",
         "overtrue/laravel-wechat": "~5.0",
+        "ratchet/pawl": "^0.3.5",
+        "textalk/websocket": "^1.4",
         "tymon/jwt-auth": "^1.0",
         "yansongda/pay": "^2.9"
     },

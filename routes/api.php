@@ -59,6 +59,9 @@ Route::prefix('v1')
 
                 Route::get('test', 'TestsController@test')
                     ->name('test');
+
+                Route::post('orders/{order}/stop', 'OrdersController@stop')
+                    ->name('order.stop');
                 //非Authorization的api
                 Route::middleware('auth:api')->group(function () {
                     //用户信息

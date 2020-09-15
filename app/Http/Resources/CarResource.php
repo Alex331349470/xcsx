@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\DriverSchool;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CarResource extends JsonResource
@@ -14,6 +15,7 @@ class CarResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $data = parent::toArray($request);
+        return $data;
     }
 }

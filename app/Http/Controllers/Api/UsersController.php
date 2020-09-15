@@ -12,6 +12,7 @@ class UsersController extends Controller
     {
         $user = User::query()->whereId($request->user()->id)->first();
 
+        UserResource::wrap('data');
         return new UserResource($user);
     }
 

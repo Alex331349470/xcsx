@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\CarResource;
-use App\Jobs\CarStatus;
 use App\Models\Car;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -23,16 +22,12 @@ class CarsController extends Controller
     {
         $cars = Car::paginate(10);
 
-        foreach ($cars as $car) {
-            $this->dispatch(new CarStatus($car));
-        }
-
+        CarResource::wrap('data');
         return new CarResource($cars);
     }
 
     public function show(Car $car)
     {
-        $this->dispatch(new CarStatus($car));
         return new CarResource($car);
     }
 
