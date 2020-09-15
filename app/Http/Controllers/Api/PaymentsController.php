@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\OrderPaid;
+use Endroid\QrCode\QrCode;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\SellItem;
@@ -24,13 +24,15 @@ class PaymentsController extends Controller
 
         $order->save();
 
-        app('wechat_pay')->mp([
+        $wechatOrder = app('wechat_pay')->scan([
             'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
             'body' => '支付订单：'. $order->no,
         ]);
 
-        return response(null,200);
+        $qrCode = new QrCode($wechatOrder->code_url);
+
+        return response($qrCode->writeDataUri(), 200);
     }
 
 
