@@ -21,7 +21,7 @@ class CarsController extends Controller
 
     public function index()
     {
-        $cars = Car::query()->with('school')->paginate(10);
+        $cars = Car::with('school')->paginate(10);
 
         foreach ($cars as $car) {
             $this->dispatch(new CarStatus($car));
