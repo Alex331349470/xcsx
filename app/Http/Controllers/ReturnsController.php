@@ -34,7 +34,7 @@ class ReturnsController extends Controller
             'status' => true,
         ]);
 
-//        $this->afterPaid($order);
+        $this->afterPaid($order);
 
         return app('wechat_pay')->success();
     }

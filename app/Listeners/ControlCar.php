@@ -19,6 +19,7 @@ class ControlCar
      */
     public function handle(OrderPaid $event)
     {
+        \Log::info();
         $order = $event->getOrder();
 
         $car = Car::query()->where('id',$order->car_id)->first();
