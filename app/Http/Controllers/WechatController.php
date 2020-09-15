@@ -25,10 +25,12 @@ class WechatController extends Controller
                 "name" => "训练车系统",
                 "url" => "http://car.agelove.cn/admin"
             ],
-            
+
         ];
 
         $app->menu->create($menu);
+        
+        return $app->menu->list();
     }
 
 }
