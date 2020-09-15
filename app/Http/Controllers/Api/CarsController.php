@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\CarResource;
+use App\Jobs\CarStatus;
 use App\Models\Car;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -22,11 +23,15 @@ class CarsController extends Controller
     {
         $cars = Car::paginate(10);
 
+        foreach ($cars as $car) {
+            $this->dispatch(new CarStatus($car));
+        }
         return new CarResource($cars);
     }
 
     public function show(Car $car)
     {
+        $this->dispatch(new CarStatus($car));
         return new CarResource($car);
     }
 
@@ -36,7 +41,7 @@ class CarsController extends Controller
         //车辆唯一标识码
         $devId = $request->serialNum;
         //继电器号码
-        $controllerNum = str_pad($request->type, 2, 0, STR_PAD_LEFT);
+        $controllerNum = str_pad($request->controllerNum, 2, 0, STR_PAD_LEFT);
 
         //根据type值进行继电器功能
         switch ($request->type) {
