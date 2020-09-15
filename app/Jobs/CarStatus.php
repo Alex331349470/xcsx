@@ -34,10 +34,12 @@ class CarStatus implements ShouldQueue
      */
     public function handle()
     {
-        if ($this->car->end == Carbon::now()) {
-            $this->car->update([
-                'status' => false,
-            ]);
-        }
+       $now = Carbon::now() ;
+       $get = $this->car->end;
+       if ($now->gte($get)) {
+           $this->car->update([
+               'status' => false,
+           ]);
+       }
     }
 }
