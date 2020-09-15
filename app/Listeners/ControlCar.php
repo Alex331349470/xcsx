@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderPaid;
 use App\Models\Car;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -32,11 +33,12 @@ class ControlCar
 
     protected function controlCar($time, $devId)
     {
+        $client = new Client();
         $dechexTime = str_pad(dechex($time), 4, 0, STR_PAD_LEFT);
 
         $msg = 'e10401' . '00' . $dechexTime;
 
-        $this->client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+        $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
             'query' => [
                 'us_id' => env('CAR_US_ID'),
                 'openid' => env('CAR_OPEN_ID'),
