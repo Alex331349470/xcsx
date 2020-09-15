@@ -8,8 +8,8 @@ class DriverSchool extends Model
 {
     protected $fillable = ['name'];
 
-    public function UserInfo()
+    public function user()
     {
-        return $this->belongsTo(UserInfo::class);
+        return $this->hasMany(User::class);
     }
 }
