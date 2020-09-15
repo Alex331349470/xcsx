@@ -20,19 +20,19 @@ class ReturnsController extends Controller
         if (!$order) {
             return 'fail';
         }
-//        // 订单已支付
-//        if ($order->paid_at) {
-//            // 告知微信支付此订单已处理
-//            return app('wechat_pay')->success();
-//        }
+        // 订单已支付
+        if ($order->paid_at) {
+            // 告知微信支付此订单已处理
+            return app('wechat_pay')->success();
+        }
 
-//        $officialAccount = Factory::officialAccount(config('wechat.official_account.default'));
-//        $user = $officialAccount->user->get($data->openid);
+        $officialAccount = Factory::officialAccount(config('wechat.official_account.default'));
+        $user = $officialAccount->user->get($data->openid);
         // 将订单标记为已支付
         $order->update([
             'paid_at' => Carbon::now(),
             'payment_no' => $data->transaction_id,
-//            'pay_man' => $user->nickname
+            'pay_man' => $user->nickname
         ]);
 
 //        $this->afterPaid($order);
