@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
+use Illuminate\Support\Carbon;
 
 class Order extends Model
 {
@@ -49,5 +51,10 @@ class Order extends Model
         \Log::warning('find order no failed');
 
         return false;
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
     }
 }
