@@ -35,7 +35,7 @@ class ReturnsController extends Controller
             'pay_man' => $user->nickname
         ]);
 
-        $this->afterPaid($order);
+//        $this->afterPaid($order);
 
         return app('wechat_pay')->success();
     }
