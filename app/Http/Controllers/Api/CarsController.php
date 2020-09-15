@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class CarsController extends Controller
 {
+    //为 Guzzle http 创建新的实例变量
+    protected $client;
+
+    public function __construct(Client $client)
+    {
+        //返回 guzzle http 对象实例
+        return $this->client = $client;
+    }
+
     public function index()
     {
         $cars = Car::paginate(10);
@@ -18,50 +27,60 @@ class CarsController extends Controller
 
     public function show(Car $car)
     {
-        return new CarResource($car->where('serial_num', $car->serial_num)->first());
+        return new CarResource($car);
     }
 
+    //控制车辆继电器
     public function controlCar(Request $request)
     {
+        //车辆唯一标识码
         $devId = $request->serialNum;
-        $time = $request->time;
-        $type = str_pad($request->type, 2, 0, STR_PAD_LEFT);
+        //继电器号码
+        $controllerNum = str_pad($request->type, 2, 0, STR_PAD_LEFT);
 
+        //根据type值进行继电器功能
+        switch ($request->type) {
+            case 'start':
+                $this->sendStartSignal($devId, $controllerNum);
 
-        $this->sendSignal($time, $devId, $type);
+            default:
+                $this->sendDelaySignal($request->time, $devId, $controllerNum);
+        }
+
         return response()->json([
             'message' => '发送指令成功！',
         ])->setStatusCode(200);
     }
 
-    protected function sendSignal($time, $devId, $type)
+    //发送继电器启动控制信号
+    protected function sendStartSignal($devId, $controllerNum)
     {
-        $client = new Client();
+        $msg = 'e104' . $controllerNum . '000001';
 
-        $get = str_pad(dechex($time), 4, 0, STR_PAD_LEFT);
-
-        $msg = 'e104' . $type . '01' . $get;
-
-
-        $promise = $client->requestAsync('get', 'https://mobi.ydsyb123.com/api/send2sb.php', [
+        $this->client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
             'query' => [
                 'us_id' => env('CAR_US_ID'),
                 'openid' => env('CAR_OPEN_ID'),
                 'dev_id' => $devId,
-                'msg' => 'e104'.$type.'000001'
+                'msg' => $msg
             ]
-        ])->then(function () use ($msg, $client, $devId) {
-            $client->requestAsync('get', 'https://mobi.ydsyb123.com/api/send2sb.php', [
-                'query' => [
-                    'us_id' => env('CAR_US_ID'),
-                    'openid' => env('CAR_OPEN_ID'),
-                    'dev_id' => $devId,
-                    'msg' => $msg
-                ]
-            ]);
-        });
+        ]);
+    }
 
+    //发送继电器延时关闭信号
+    protected function sendDelaySignal($time, $devId, $controllerNum)
+    {
+        $dechexTime = str_pad(dechex($time), 4, 0, STR_PAD_LEFT);
 
-        $promise->wait();
+        $msg = 'e104' . $controllerNum . '00' . $dechexTime;
+
+        $this->client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+            'query' => [
+                'us_id' => env('CAR_US_ID'),
+                'openid' => env('CAR_OPEN_ID'),
+                'dev_id' => $devId,
+                'msg' => $msg
+            ]
+        ]);
     }
 }

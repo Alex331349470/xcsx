@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_no')->nullable()->comment('支付流水号');
             $table->boolean('status')->default(false)->comment('订单状态');
             $table->string('pay_man')->nullable()->comment('付款人');
+            $table->boolean('refund')->default(false)->comment('退款状态');
             $table->timestamps();
         });
     }

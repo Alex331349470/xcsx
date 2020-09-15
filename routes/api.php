@@ -27,7 +27,7 @@ Route::prefix('v1')
                     return 'this is version 1';
                 })->name('version');
 
-                //微信登录
+                //登录
                 Route::post('authorizations', 'AuthorizationsController@store')
                     ->name('authorization.store');
 
@@ -42,9 +42,21 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
-                Route::get('/cars/{car}/sell_items/{sell_item}/payment', 'PaymentsController@payByWechat');
+                Route::get('cars/{car}/sell_items/{sell_item}/payment', 'PaymentsController@payByWechat')
+                    ->name('car.sell_item.payment');
 
-                Route::resource('orders','OrdersController');
+                Route::get('sell_items', 'SellItemsController@index')
+                    ->name('sell_items.index');
+
+                Route::get('cars', 'CarsController@index')
+                    ->name('cars.index');
+
+                Route::get('cars/{car}', 'CarsController@show')
+                    ->name('cars.show');
+
+                Route::post('car/control', 'CarsController@controlCar')
+                    ->name('car.control');
+
 
                 //非Authorization的api
                 Route::middleware('auth:api')->group(function () {
@@ -52,10 +64,9 @@ Route::prefix('v1')
                     Route::get('user', 'UsersController@me')
                         ->name('user.show');
 
-                    Route::get('cars', 'CarsController@index');
 
-                    Route::post('car/control', 'CarsController@controlCar')
-                        ->name('car.control');
+//                    Route::post('car/control', 'CarsController@controlCar')
+//                        ->name('car.control');
 
 //                    Route::get('payment/{order}/wechat', 'PaymentsController@payBywechat')
 //                        ->name('payment.wechat');

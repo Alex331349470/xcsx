@@ -83,7 +83,7 @@ class UsersController extends AdminController
         $form->saving(function (Form $form){
             $form->password = bcrypt($form->password);
         });
-        
+
         return $form;
     }
 }
