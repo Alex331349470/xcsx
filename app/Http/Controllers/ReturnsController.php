@@ -31,7 +31,7 @@ class ReturnsController extends Controller
         // 将订单标记为已支付
         $order->update([
             'paid_at' => Carbon::now(),
-            'payment_no' => $data->transaction_id,
+            'payment_no' => $data,
         ]);
 
 //        $this->afterPaid($order);
