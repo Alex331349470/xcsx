@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPaid;
 use App\Models\Order;
 use Carbon\Carbon;
+use EasyWeChat\Factory;
 use Illuminate\Http\Request;
 
 class ReturnsController extends Controller
@@ -24,12 +26,22 @@ class ReturnsController extends Controller
             return app('wechat_pay')->success();
         }
 
+        $officialAccount = Factory::officialAccount(config('wechat.official_account.default'));
+        $user = $officialAccount->user->get($data->openid);
         // 将订单标记为已支付
         $order->update([
             'paid_at' => Carbon::now(),
             'payment_no' => $data->transaction_id,
+            'pay_man' => $user->nickname
         ]);
 
+        $this->afterPaid($order);
+
         return app('wechat_pay')->success();
+    }
+
+    protected function afterPaid(Order $order)
+    {
+        event(new OrderPaid($order));
     }
 }
