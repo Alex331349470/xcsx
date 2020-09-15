@@ -18,4 +18,4 @@ Route::any('wechat', 'WechatController@serve');
 Route::post('payment/wechat/notify', 'ReturnsController@wechatNotify')
     ->name('payment.wechat.notify');
 
-Route::get('wechat/menu','WehchatController@menu');
+Route::get('wechat/menu','WechatController@menu');
