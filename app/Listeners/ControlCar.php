@@ -23,7 +23,7 @@ class ControlCar
     {
         $order = $event->getOrder();
 
-        $car = Car::query()->where('id',$order->car_id)->first();
+        $car = Car::query()->where('id', $order->car_id)->first();
 
         $this->controlCar($order->left_time, $car->serial_num);
 
@@ -33,7 +33,7 @@ class ControlCar
             'end' => Carbon::now()->addSeconds($order->left_time),
         ]);
 
-        CarStatus::dispatch($car,$order->left_time);
+        CarStatus::dispatch($car, $order, $order->left_time);
     }
 
     protected function controlCar($time, $devId)
