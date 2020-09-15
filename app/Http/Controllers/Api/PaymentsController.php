@@ -15,14 +15,12 @@ class PaymentsController extends Controller
             abort(403,'车辆正在使用中');
         }
 
-        $order = new Order([
+        $order = Order::create([
             'car_id' => $car->id,
             'sell_item_id' => $sellItem->id,
             'left_time' => $sellItem->time,
             'income' => $sellItem->price,
         ]);
-
-        $order->save();
 
         $wechatOrder = app('wechat_pay')->scan([
             'out_trade_no' => $order->no,
