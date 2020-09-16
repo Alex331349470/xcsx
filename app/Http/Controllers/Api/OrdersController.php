@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Jobs\CarStatus;
 use App\Models\Car;
 use App\Models\Order;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\New_;
 
 class OrdersController extends Controller
 {
@@ -66,8 +68,36 @@ class OrdersController extends Controller
         return response(null, 200);
     }
 
-    public function start(Order $order)
+    public function start(Order $order,Car $car)
     {
+        $time = $order->left_time;
+        $serial_num = $car->serial_num;
 
+        $this->controlCar($time, $serial_num);
+
+        $car->update([
+            'status' => true,
+            'start' => Carbon::now(),
+            'end' => Carbon::now()->addSeconds($order->left_time),
+        ]);
+
+        CarStatus::dispatch($car, $order, $order->left_time);
+    }
+
+    protected function controlCar($time, $devId)
+    {
+        $client = new Client();
+        $dechexTime = str_pad(dechex($time), 4, 0, STR_PAD_LEFT);
+
+        $msg = 'e10401' . '01' . $dechexTime;
+
+        $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+            'query' => [
+                'us_id' => env('CAR_US_ID'),
+                'openid' => env('CAR_OPEN_ID'),
+                'dev_id' => $devId,
+                'msg' => $msg
+            ]
+        ]);
     }
 }

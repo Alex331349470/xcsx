@@ -62,6 +62,9 @@ Route::prefix('v1')
 
                 Route::post('orders/{order}/stop', 'OrdersController@stop')
                     ->name('order.stop');
+
+                Route::post('orders/{order}/cars/{car}/start', 'OrdersController@start')
+                    ->name('order.start');
                 //非Authorization的api
                 Route::middleware('auth:api')->group(function () {
                     //用户信息
