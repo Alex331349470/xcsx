@@ -24,6 +24,7 @@ class OrdersController extends Controller
 
     public function stop(Order $order)
     {
+        dd($order->id);
         if ($order->left_time == 0) {
             abort(403, '该订单已经结束');
         }
