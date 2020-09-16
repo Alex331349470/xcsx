@@ -32,7 +32,8 @@ class OrdersController extends Controller
             abort('该订单已完成');
         }
 
-        $serial_num = Car::query()->where('id', $order->car_id)->first()->serial_num;
+        dd($order->car_id);
+        $serial_num = Car::query()->where('id', $order->car_id)->first();
         dd($serial_num);
         $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
