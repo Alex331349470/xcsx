@@ -7,6 +7,7 @@ use App\Http\Resources\OrderResource;
 use App\Jobs\CarStatus;
 use App\Models\Car;
 use App\Models\Order;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\New_;
@@ -74,6 +75,10 @@ class OrdersController extends Controller
         $serial_num = $car->serial_num;
 
         $this->controlCar($time, $serial_num);
+
+        $order->update([
+            $order->status => true,
+        ]);
 
         $car->update([
             'status' => true,
