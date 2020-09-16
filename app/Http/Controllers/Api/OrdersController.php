@@ -42,8 +42,12 @@ class OrdersController extends Controller
                 'msg' => 'd100'
             ]
         ]);
+        $message = $ws->receive();
 
-        $msg = json_decode($ws->receive(), true);
+        $ws->close();
+        dd($message);
+        
+        $msg = json_decode($message, true);
 
         $change = substr($msg['msg'], 4, 4);
 
