@@ -44,11 +44,11 @@ class OrdersController extends AdminController
         $grid->column('payment_no', __('付款流水号'));
         $grid->column('status',__('订单状态'))->display(function ($value){
             if ($value == 1) {
-                return '进行中';
+                return '已完结';
             } else if ($value == 2){
                 return '停止中';
             } else {
-                return '已完结';
+                return '进行中';
             }
         });
         $grid->column('pay_man',__('付款人'));
