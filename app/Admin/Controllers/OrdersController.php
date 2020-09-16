@@ -47,7 +47,7 @@ class OrdersController extends AdminController
         $grid->column('status',__('订单状态'))->display(function ($value){
             if ($value == 0) {
                 return '完结';
-            } else if ($value == 2){
+            } elseif ($value == 2){
                 return '停止';
             } else {
                 return '进行';
