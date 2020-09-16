@@ -45,7 +45,6 @@ class OrdersController extends Controller
         $message = $ws->receive();
 
         $ws->close();
-        dd($message);
 
         $msg = json_decode($message, true);
 
