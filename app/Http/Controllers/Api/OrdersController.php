@@ -77,7 +77,7 @@ class OrdersController extends Controller
         $this->controlCar($time, $serial_num);
 
         $order->update([
-            $order->status => true,
+            $order->status => 0,
         ]);
 
         $car->update([
