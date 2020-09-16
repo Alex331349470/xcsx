@@ -28,13 +28,9 @@ class OrdersController extends Controller
             abort(403, '该订单已经结束');
         }
 
-        if ($order->status == 0) {
-            abort('该订单已完成');
-        }
-
         dd($order->car_id);
         $serial_num = Car::query()->where('id', $order->car_id)->first();
-        dd($serial_num);
+
         $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
         $client = new Client();
