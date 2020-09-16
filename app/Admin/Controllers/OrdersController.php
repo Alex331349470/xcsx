@@ -43,12 +43,12 @@ class OrdersController extends AdminController
         $grid->column('paid_at', __('付款时间'));
         $grid->column('payment_no', __('付款流水号'));
         $grid->column('status',__('订单状态'))->display(function ($value){
-            if ($value == 1) {
-                return '已完结';
+            if ($value == 0) {
+                return '进行';
             } else if ($value == 2){
-                return '停止中';
+                return '停止';
             } else {
-                return '进行中';
+                return '完结';
             }
         });
         $grid->column('pay_man',__('付款人'));
@@ -89,23 +89,4 @@ class OrdersController extends AdminController
         return $show;
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new Order());
-
-        $form->number('car_id', __('Car id'));
-        $form->number('sell_item_id', __('Sell item id'));
-        $form->text('no', __('No'));
-        $form->number('left_time', __('Left time'));
-        $form->decimal('income', __('Income'))->default(0.00);
-        $form->datetime('paid_at', __('Paid at'))->default(date('Y-m-d H:i:s'));
-        $form->text('payment_no', __('Payment no'));
-
-        return $form;
-    }
 }
