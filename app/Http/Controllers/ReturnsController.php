@@ -31,7 +31,7 @@ class ReturnsController extends Controller
             'paid_at' => Carbon::now(),
             'payment_no' => $data->transaction_id,
             'pay_man' => 'normal_man',
-            'status' => true,
+            'status' => 1,
         ]);
 
         $this->afterPaid($order);

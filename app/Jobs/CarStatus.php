@@ -40,16 +40,19 @@ class CarStatus implements ShouldQueue
     {
         $now = Carbon::now();
         $get = $this->car->end;
-        if ($now->gte($get)) {
-            $this->car->update([
-                'status' => false,
-            ]);
+        if ($this->order->status !== 2) {
+            if ($now->gte($get)) {
+                $this->car->update([
+                    'status' => false,
+                ]);
 
-            $this->order->update([
-                'left_time' => 0,
-                'status' => false,
-            ]);
+                $this->order->update([
+                    'left_time' => 0,
+                    'status' => 0,
+                ]);
+            }
         }
+
 
     }
 }

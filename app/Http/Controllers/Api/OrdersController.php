@@ -38,7 +38,7 @@ class OrdersController extends Controller
 
         $client = new Client();
 
-        $client->get('https://mobi.ydsyb123.com/api/send2sb.php',[
+        $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
             'query' => [
                 'us_id' => env('CAR_US_ID'),
                 'openid' => env('CAR_OPEN_ID'),
@@ -47,18 +47,18 @@ class OrdersController extends Controller
             ]
         ]);
 
-        $msg = json_decode($ws->receive(),true);
+        $msg = json_decode($ws->receive(), true);
 
-        $change = substr($msg['msg'],4,4);
+        $change = substr($msg['msg'], 4, 4);
 
         $time = hexdec($change);
 
         $order->update([
             'left_time' => $time,
-
+            'status' => 2,
         ]);
 
-        return response(null,200);
+        return response(null, 200);
     }
 
     public function start()

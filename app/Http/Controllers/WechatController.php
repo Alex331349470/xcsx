@@ -29,7 +29,7 @@ class WechatController extends Controller
         ];
 
         $app->menu->create($menu);
-        
+
         return $app->menu->list();
     }
 
