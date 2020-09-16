@@ -27,7 +27,13 @@ class OrdersController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Order());
-
+        $grid->selector(function (Grid\Tools\Selector $selector) {
+            $selector->select('status', '运营状态', [
+                0 => '完成',
+                1 => '进行',
+                2 => '停止',
+            ]);
+        });
         $grid->model()->whereNotNull('paid_at')->orderBy('paid_at','desc');
         $grid->column('id', __('Id值'));
         $grid->column('car', __('车辆名称'))->display(function () {
@@ -46,7 +52,7 @@ class OrdersController extends AdminController
         $grid->column('payment_no', __('付款流水号'));
         $grid->column('status',__('订单状态'))->display(function ($value){
             if ($value == 0) {
-                return '完结';
+                return '完成';
             } elseif ($value == 2){
                 return '停止';
             } else {

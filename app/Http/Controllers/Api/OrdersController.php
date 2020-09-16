@@ -22,6 +22,34 @@ class OrdersController extends Controller
 
     public function show(Order $order)
     {
+        $car = Car::query()->where('id', $order->car_id)->first();
+
+        $serial_num = $car->serial_num;
+
+        $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
+
+        $client = new Client();
+
+        $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+            'query' => [
+                'us_id' => env('CAR_US_ID'),
+                'openid' => env('CAR_OPEN_ID'),
+                'dev_id' => $serial_num,
+                'msg' => 'd100'
+            ]
+        ]);
+        $message = $ws->receive();
+
+        $ws->close();
+
+        $msg = json_decode($message, true);
+
+        $change = substr($msg['msg'], 4, 4);
+
+        $time = hexdec($change);
+        $order->left_time = $time;
+        $order->save();
+
         return new OrderResource($order);
     }
 
