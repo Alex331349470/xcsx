@@ -27,6 +27,8 @@ class OrdersController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Order());
+
+        $grid->model()->whereNotNull('paid_at')->orderBy('paid_at','desc');
         $grid->column('id', __('Id值'));
         $grid->column('car', __('车辆名称'))->display(function () {
             $name = Car::query()->where('id', $this->car_id)->first()->name;
