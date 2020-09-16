@@ -34,6 +34,7 @@ class OrdersController extends Controller
 
         $serial_num = Car::query()->where('id', $order->car_id)->first()->serial_num;
 
+        dd($serial_num);
         $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
         $client = new Client();
@@ -53,7 +54,6 @@ class OrdersController extends Controller
 
         $time = hexdec($change);
 
-        dd($time);
         $order->update([
             'left_time' => $time,
             'status' => 2,
