@@ -73,12 +73,12 @@ class OrdersController extends Controller
     {
         $time = $order->left_time;
         $serial_num = $car->serial_num;
+        $order->status = 1;
+        $order->save();
 
         $this->controlCar($time, $serial_num);
 
-        $order->update([
-            $order->status => 0,
-        ]);
+
 
         $car->update([
             'status' => true,
