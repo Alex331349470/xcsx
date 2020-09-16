@@ -30,7 +30,7 @@ class OrdersController extends Controller
 
         $serial_num = Car::query()->where('id', $order->car_id)->first();
 
-        $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
+        $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=32094&member_id=319');
 
         $client = new Client();
 
@@ -46,7 +46,7 @@ class OrdersController extends Controller
 
         $ws->close();
         dd($message);
-        
+
         $msg = json_decode($message, true);
 
         $change = substr($msg['msg'], 4, 4);
