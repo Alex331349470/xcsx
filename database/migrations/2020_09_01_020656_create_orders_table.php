@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('income')->default(0)->comment('收入');
             $table->dateTime('paid_at')->nullable()->comment('支付日期');
             $table->string('payment_no')->nullable()->comment('支付流水号');
-            $table->enum('status', [0, 1, 2])->default(0)->comment('订单状态');
+            $table->tinyInteger('status')->default(0)->comment('订单状态');
             $table->string('pay_man')->nullable()->comment('付款人');
             $table->boolean('refund')->default(false)->comment('退款状态');
             $table->timestamps();
