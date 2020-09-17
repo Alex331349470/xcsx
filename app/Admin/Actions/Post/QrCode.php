@@ -14,9 +14,10 @@ class QrCode extends RowAction
     {
         $client = new Client();
 
-        $client->get('http://car.agelove.cn/api/v1/cars/1/sell_items/'.$model->id.'/payment');
+        $body = $client->get('http://car.agelove.cn/api/v1/cars/1/sell_items/'.$model->id.'/payment')->getBody();
 
-        return $this->response()->success('二维码生成成功')->refresh();
+//        return $this->response()->success('二维码生成成功')->refresh();
+        dd($body);
     }
 
 }

@@ -8,6 +8,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use GuzzleHttp\Client;
 
 class SellItemsController extends AdminController
 {
@@ -31,12 +32,13 @@ class SellItemsController extends AdminController
         $grid->column('time', __('时间(秒)'));
         $grid->column('name', __('套餐名称'));
         $grid->column('price', __('价格'));
+        $grid->column('qrcode', __('二维码'))->display(function (){
+            $data = file_get_contents('http://car.agelove.cn/api/v1/cars/1/sell_items/'.$this->id.'/payment');
+        })->qrcode();
 
-        $grid->actions(function ($actions){
-            $actions->add(new QrCode);
-        });
         return $grid;
     }
+
 
     /**
      * Make a show builder.
