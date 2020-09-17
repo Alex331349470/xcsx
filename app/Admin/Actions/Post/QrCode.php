@@ -5,19 +5,25 @@ namespace App\Admin\Actions\Post;
 use Encore\Admin\Actions\RowAction;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class QrCode extends RowAction
 {
-    public $name = '二维码';
+    public $name = '选择车辆';
 
-    public function handle(Model $model)
+    public function handle(Model $model, Request $request)
     {
-        $client = new Client();
+        $request->get('car');
+        return $this->response()->success('二维码生成成功')->refresh();
+    }
 
-        $body = $client->get('http://car.agelove.cn/api/v1/cars/1/sell_items/'.$model->id.'/payment')->getBody();
+    public function form()
+    {
+        $car = [
+            '训练车01',
+        ];
 
-//        return $this->response()->success('二维码生成成功')->refresh();
-        dd($body);
+        $this->checkbox('car', '车辆')->options($car);
     }
 
 }
