@@ -27,7 +27,6 @@ class SellItemsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new SellItem());
-        $id = $grid->model()->id;
 
         $grid->column('id', __('Id值'));
         $grid->column('time', __('时间(秒)'));
