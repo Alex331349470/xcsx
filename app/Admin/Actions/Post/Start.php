@@ -6,6 +6,7 @@ use App\Jobs\CarStatus;
 use App\Models\Car;
 use Carbon\Carbon;
 use Encore\Admin\Actions\RowAction;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 
 class Start extends RowAction
@@ -33,6 +34,23 @@ class Start extends RowAction
         CarStatus::dispatch($car, $model, $model->left_time);
 
         return $this->response()->success('续单成功')->refresh();
+    }
+
+    protected function controlCar($time, $devId)
+    {
+        $client = new Client();
+        $dechexTime = str_pad(dechex($time), 4, 0, STR_PAD_LEFT);
+
+        $msg = 'e10401' . '01' . $dechexTime;
+
+        $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+            'query' => [
+                'us_id' => env('CAR_US_ID'),
+                'openid' => env('CAR_OPEN_ID'),
+                'dev_id' => $devId,
+                'msg' => $msg
+            ]
+        ]);
     }
 
 }

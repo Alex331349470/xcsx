@@ -69,7 +69,7 @@ class OrdersController extends AdminController
             $actions->add(new Stop);
             $actions->add(new Start);
         });
-        
+
         return $grid;
     }
 
