@@ -26,7 +26,7 @@ class QrCode extends RowAction
             array_push($car, $ca->name);
         }
 
-        
+
         $this->checkbox('car', '车辆')->options($car);
     }
 
