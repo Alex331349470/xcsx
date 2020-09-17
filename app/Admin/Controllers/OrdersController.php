@@ -7,6 +7,7 @@ use App\Admin\Actions\Post\Stop;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\SellItem;
+use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -29,6 +30,7 @@ class OrdersController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Order());
+        Admin::style('.box-body{overflow:scroll;}');
         $grid->selector(function (Grid\Tools\Selector $selector) {
             $selector->select('status', '运营状态', [
                 0 => '完成',

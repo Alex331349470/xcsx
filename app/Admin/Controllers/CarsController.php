@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Models\Car;
 use App\Models\DriverSchool;
 use Doctrine\DBAL\Driver;
+use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -27,7 +28,7 @@ class CarsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Car());
-
+        Admin::style('.box-body{overflow:scroll;}');
         $grid->column('id', __('Id'));
         $grid->column('driver_school', __('所属驾校'))->display(function (){
             $driverSchool = DriverSchool::query()->whereId($this->driver_school_id)->first();

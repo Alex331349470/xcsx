@@ -8,6 +8,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Admin;
 use GuzzleHttp\Client;
 
 class SellItemsController extends AdminController
@@ -26,6 +27,7 @@ class SellItemsController extends AdminController
      */
     protected function grid()
     {
+        Admin::style('.box-body{overflow: scroll;}');
         $grid = new Grid(new SellItem());
         $grid->column('id', __('Id值'));
         $grid->column('qrcode', __('二维码'))->qrcode(function (){
