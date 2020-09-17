@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\QrCode;
 use App\Models\SellItem;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -31,6 +32,9 @@ class SellItemsController extends AdminController
         $grid->column('name', __('套餐名称'));
         $grid->column('price', __('价格'));
 
+        $grid->actions(function ($actions){
+            $actions->add(new QrCode);
+        });
         return $grid;
     }
 
