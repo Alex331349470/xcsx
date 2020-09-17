@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\Start;
 use App\Admin\Actions\Post\Stop;
 use App\Models\Car;
 use App\Models\Order;
@@ -66,7 +67,9 @@ class OrdersController extends AdminController
 
         $grid->actions(function ($actions){
             $actions->add(new Stop);
+            $actions->add(new Start);
         });
+        
         return $grid;
     }
 
