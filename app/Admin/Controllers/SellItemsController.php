@@ -28,7 +28,6 @@ class SellItemsController extends AdminController
     {
         $grid = new Grid(new SellItem());
 
-        $ItemId = $this->id;
         $grid->column('id', __('Id值'));
         $grid->column('time', __('时间(秒)'));
         $grid->column('name', __('套餐名称'));
