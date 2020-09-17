@@ -2,6 +2,7 @@
 
 namespace App\Admin\Actions\Post;
 
+use App\Models\Car;
 use Encore\Admin\Actions\RowAction;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +20,13 @@ class QrCode extends RowAction
 
     public function form()
     {
-        $car = [
-            '训练车01',
-        ];
+        $car = [];
+        $cars = Car::all();
+        foreach ($cars as $ca) {
+            array_push($car, $ca->name);
+        }
 
+        
         $this->checkbox('car', '车辆')->options($car);
     }
 
