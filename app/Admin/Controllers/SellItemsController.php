@@ -34,6 +34,7 @@ class SellItemsController extends AdminController
         $grid->column('price', __('价格'));
         $grid->column('qrcode', __('二维码'))->display(function (){
             $data = file_get_contents('http://car.agelove.cn/api/v1/cars/1/sell_items/'.$this->id.'/payment');
+            return $data;
         })->qrcode();
 
         return $grid;

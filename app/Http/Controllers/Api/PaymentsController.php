@@ -12,7 +12,7 @@ class PaymentsController extends Controller
     public function payByWechat(Car $car, SellItem $sellItem)
     {
         if ($car->status == true) {
-            abort(403,'车辆正在使用中');
+            abort(403, '车辆正在使用中');
         }
 
         $order = Order::create([
@@ -25,14 +25,15 @@ class PaymentsController extends Controller
         $wechatOrder = app('wechat_pay')->scan([
             'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
-            'body' => '支付订单：'. $order->no,
+            'body' => '支付订单：' . $order->no,
         ]);
 
-        $qrCode = new QrCode($wechatOrder->code_url);
+//        $qrCode = new QrCode($wechatOrder->code_url);
 
-        return response($qrCode->writeDataUri(), 200);
+//        return response($qrCode->writeDataUri(), 200);
+
+        return response($wechatOrder->code_url, 200);
     }
-
 
 
 }
