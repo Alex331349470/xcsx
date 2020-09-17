@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\Stop;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\SellItem;
@@ -62,6 +63,10 @@ class OrdersController extends AdminController
         $grid->column('pay_man',__('付款人'));
 
         $grid->disableCreateButton();
+
+        $grid->actions(function ($actions){
+            $actions->add(new Stop);
+        });
         return $grid;
     }
 
