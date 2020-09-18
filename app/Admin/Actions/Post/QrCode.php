@@ -14,20 +14,26 @@ class QrCode extends RowAction
 
     public function handle(Model $model, Request $request)
     {
-        $request->get('car');
+
+        $model->car_id = $request->get('car_id');
+        $model->save();
+
         return $this->response()->success('二维码生成成功')->refresh();
     }
 
     public function form()
     {
-        $car = [];
-        $cars = Car::all();
-        foreach ($cars as $ca) {
-            array_push($car, $ca->name);
-        }
+//        $car = [];
+//        $cars = Car::all();
+//        foreach ($cars as $ca) {
+//            array_push($car, $ca->name);
+//        }
+        $driver_school_lv1 = Car::query()->get(['id','name'])->pluck('name','id');
+//        $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
+        $this->select('car_id', __('训练车名称'))->options($driver_school_lv1);
+//        $this->select()
 
-
-        $this->checkbox('car', '车辆')->options($car);
+//        $this->checkbox('car', '车辆')->options($car);
     }
 
 }
