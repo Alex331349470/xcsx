@@ -29,13 +29,40 @@ class SellItemsController extends AdminController
     {
         Admin::style('.box-body{overflow: scroll;}');
         $grid = new Grid(new SellItem());
-        $grid->column('id', __('Id值'));
-        $grid->column('qrcode', __('二维码'))->qrcode(function (){
-            $data = file_get_contents('http://car.agelove.cn/api/v1/cars/1/sell_items/1/payment');
+
+
+        $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
+
+            $url = 'http://car.agelove.cn/api/v1/cars/1/sell_items/' . $value . '/payment ';
+//            function file_get_contents_curl($url) {
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+
+            $data = curl_exec($ch);
+            curl_close($ch);
+
             return $data;
+//            }
+//            $data = file_get_contents($url);
+//            return $data;
         });
+//        $grid->column('qrcode', __('二维码'))->qrcode(function () {
+//            $data = file_get_contents('http://car.agelove.cn/api/v1/cars/1/sell_items/1/payment');
+//            return $data;
+//        });
+
+//        $grid->column('qrcode',__('qrcode'))->display(function (){
+//            $url = 'http://car.agelove.cn/api/v1/cars/1/sell_items/1/payment';
+//            $data = file_get_contents($url);
+//            return $data;
+//        })->qrcode();
         $grid->column('time', __('时间(秒)'));
-        $grid->column('name', __('套餐名称'))->display(function (){
+        $grid->column('name', __('套餐名称'))->display(function () {
             return $this->id;
         });
         $grid->column('price', __('价格'));
