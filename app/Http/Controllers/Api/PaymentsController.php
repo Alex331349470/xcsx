@@ -26,7 +26,7 @@ class PaymentsController extends Controller
         ]);
 
         $wechatOrder = app('wechat_pay')->scan([
-            'out_trade_no' => 'xcsx' . $order->no,
+            'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
             'body' => '支付订单：' . $school . '-' . $order->no,
         ]);
