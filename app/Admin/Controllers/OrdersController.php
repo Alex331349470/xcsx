@@ -111,14 +111,12 @@ class OrdersController extends AdminController
     {
         $form = new Form(new Order());
 
-        $driver_school_lv1 = Car::query()->get(['id','name'])->pluck('name','id');
-//        $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
-        $form->select('car_id', __('训练车名称'))->options($driver_school_lv1);
+        $car_lv1 = Car::query()->get(['id','name'])->pluck('name','id');
+        $form->select('car_id', __('训练车名称'))->options($car_lv1);
         $form->text('no', __('订单号'));
         $form->number('left_time', __('剩余时间'));
         $form->datetime('paid_at', __('支付时间'))->default(date('Y-m-d H:i:s'));
         $form->text('payment_no', __('支付流水号'));
-
 
         return $form;
     }
