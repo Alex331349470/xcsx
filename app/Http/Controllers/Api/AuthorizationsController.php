@@ -16,7 +16,7 @@ class AuthorizationsController extends Controller
             throw new AuthenticationException('用户异常');
         } else {
             $user = User::query()->where('phone', $request->phone)->first();
-            
+
             $token = auth('api')->login($user);
 
             return $this->responseWithToken($token);

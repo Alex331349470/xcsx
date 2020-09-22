@@ -45,8 +45,7 @@ Route::prefix('v1')
                 Route::get('cars/{car}/sell_items/{sell_item}/payment', 'PaymentsController@payByWechat')
                     ->name('car.sell_item.payment');
 
-                Route::get('sell_items', 'SellItemsController@index')
-                    ->name('sell_items.index');
+
 
                 Route::get('cars', 'CarsController@index')
                     ->name('cars.index');
@@ -71,7 +70,8 @@ Route::prefix('v1')
                     Route::get('user', 'UsersController@me')
                         ->name('user.show');
 
-
+                    Route::get('sell_items', 'SellItemsController@index')
+                        ->name('sell_items.index');
 //                    Route::post('car/control', 'CarsController@controlCar')
 //                        ->name('car.control');
 
