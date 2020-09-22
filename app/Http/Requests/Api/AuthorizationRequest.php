@@ -16,7 +16,6 @@ class AuthorizationRequest extends FormRequest
         return [
             'phone' => 'required',
             'password' => 'required',
-            'driver_school_id' => 'required'
         ];
     }
 }
