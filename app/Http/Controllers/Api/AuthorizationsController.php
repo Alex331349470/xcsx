@@ -10,14 +10,19 @@ class AuthorizationsController extends Controller
 {
     public function store(AuthorizationRequest $request)
     {
-        dd($user = User::query()->where('phone',$request->phone)->where('password', bcrypt($request->password))->first());
-        if (!$user = User::query()->where('phone', $request->phone)->where('password', bcrypt($request->password))->first()) {
+        $credentials['phone'] = $request->phone;
+        $credentials['password'] = $request->password;
+        if (!\Auth::attempt($credentials)) {
             throw new AuthenticationException('用户异常');
+        } else {
+            $user = User::query()->where('phone', $request->phone)->first();
+            
+            $token = auth('api')->login($user);
+
+            return $this->responseWithToken($token);
         }
 
-        $token = auth('api')->login($user);
 
-        return $this->responseWithToken($token);
     }
 
 
