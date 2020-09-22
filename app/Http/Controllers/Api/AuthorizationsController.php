@@ -10,6 +10,7 @@ class AuthorizationsController extends Controller
 {
     public function store(AuthorizationRequest $request)
     {
+        dd($user = User::query()->where('phone',$request->phone)->first());
         if (!$user = User::query()->where('phone', $request->phone)->where('password', bcrypt($request->password))->first()) {
             throw new AuthenticationException('用户异常');
         }
