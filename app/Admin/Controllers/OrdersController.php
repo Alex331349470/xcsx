@@ -89,8 +89,8 @@ class OrdersController extends AdminController
 
         $grid->footer(function ($query) {
             $data = $query->sum('income');
-            $data = $data - ($data * 6)/1000;
-            return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
+            $income = $data - ($data * 6)/1000;
+            return "<div style='padding: 10px;'>总收 ： $data 元 (实收： $income 元)</div>";
         });
 
         return $grid;

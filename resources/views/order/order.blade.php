@@ -3,7 +3,7 @@
     $(function () {
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: ["9-23", "9-24", "9-25", "9-26", "9-27", "8-28"],
                 datasets: [{
