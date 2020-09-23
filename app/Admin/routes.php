@@ -9,11 +9,10 @@ Route::group([
     'namespace'     => config('admin.route.namespace'),
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
-    $router->get('/', 'OrdersController@orderList');
+    $router->redirect('/', 'admin/orders');
     $router->resource('users','UsersController');
     $router->resource('cars','CarsController');
     $router->resource('orders','OrdersController');
-//    $router->resource('orders/list','OrdersController@orderList');
     $router->resource('sell_items','SellItemsController');
     $router->resource('driver_schools','DriverSchoolsController');
 });
