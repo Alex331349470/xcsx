@@ -52,7 +52,7 @@ class OrdersController extends AdminController
 
         $grid->column('no', __('订单号'));
         $grid->column('left_time', __('剩余时间'));
-        $grid->column('income', __('收入'))->totalRow('总收');
+        $grid->column('income', __('收入'));
         $grid->column('paid_at', __('付款时间'));
         $grid->column('payment_no', __('付款流水号'));
 
@@ -77,7 +77,9 @@ class OrdersController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
-            $filter->like('car', '车辆名称');
+            $filter->scope('new', '最近修改')
+                ->whereDate('created_at', date('Y-m-d'))
+                ->orWhere('updated_at', date('Y-m-d'));
         });
 
         return $grid;
