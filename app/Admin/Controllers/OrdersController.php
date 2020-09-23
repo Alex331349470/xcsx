@@ -35,8 +35,7 @@ class OrdersController extends AdminController
 
         $grid->header(function ($query){
             $view = view('order.order');
-
-            return new Box('收入',$view);
+            return new Box('test',$view);
         });
 
         $grid->selector(function (Grid\Tools\Selector $selector) {
@@ -46,7 +45,7 @@ class OrdersController extends AdminController
                 2 => '停止',
             ]);
         });
-        $grid->model()->whereNotNull('paid_at')->orderBy('paid_at','desc');
+        $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
         $grid->column('id', __('Id值'));
         $grid->column('car', __('车辆名称'))->display(function () {
             $name = Car::query()->where('id', $this->car_id)->first()->name;
@@ -64,26 +63,26 @@ class OrdersController extends AdminController
         $grid->column('paid_at', __('付款时间'));
         $grid->column('payment_no', __('付款流水号'));
 
-        $grid->column('status',__('订单状态'))->display(function ($value){
+        $grid->column('status', __('订单状态'))->display(function ($value) {
             if ($value == 0) {
                 return '完成';
-            } elseif ($value == 2){
+            } elseif ($value == 2) {
                 return '停止';
             } else {
                 return '进行';
             }
         });
 
-        $grid->column('pay_man',__('付款人'));
+        $grid->column('pay_man', __('付款人'));
 
         $grid->disableCreateButton();
 
-        $grid->actions(function ($actions){
+        $grid->actions(function ($actions) {
             $actions->add(new Stop);
             $actions->add(new Start);
         });
 
-        $grid->footer(function ($query){
+        $grid->footer(function ($query) {
             $data = $query->sum('income');
             return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
         });
@@ -102,12 +101,12 @@ class OrdersController extends AdminController
         $show = new Show(Order::findOrFail($id));
 
         $show->field('id', __('Id值'));
-        $show->field('car', __('所属车辆'))->as(function (){
-            $name = Car::query()->where('id',$this->car_id)->first()->name;
+        $show->field('car', __('所属车辆'))->as(function () {
+            $name = Car::query()->where('id', $this->car_id)->first()->name;
             return $name;
         });
-        $show->field('sell_item', __('所属套餐'))->as(function (){
-            $name = SellItem::query()->where('id',$this->sell_item_id)->first()->name;
+        $show->field('sell_item', __('所属套餐'))->as(function () {
+            $name = SellItem::query()->where('id', $this->sell_item_id)->first()->name;
             return $name;
         });
         $show->field('no', __('订单号'));
@@ -115,8 +114,8 @@ class OrdersController extends AdminController
         $show->field('income', __('收入'));
         $show->field('paid_at', __('付款时间'));
         $show->field('payment_no', __('付款流水号'));
-        $show->field('status',__('订单状态'));
-        $show->field('pay_man',__('付款人'));
+        $show->field('status', __('订单状态'));
+        $show->field('pay_man', __('付款人'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
 
@@ -127,7 +126,7 @@ class OrdersController extends AdminController
     {
         $form = new Form(new Order());
 
-        $car_lv1 = Car::query()->get(['id','name'])->pluck('name','id');
+        $car_lv1 = Car::query()->get(['id', 'name'])->pluck('name', 'id');
         $form->select('car_id', __('训练车名称'))->options($car_lv1);
         $form->text('no', __('订单号'));
         $form->number('left_time', __('剩余时间'));
