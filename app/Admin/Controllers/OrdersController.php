@@ -67,6 +67,7 @@ class OrdersController extends AdminController
         });
 
         $grid->column('pay_man',__('付款人'));
+        $grid->column('income','总收入')->totalRow();
 
         $grid->disableCreateButton();
 
