@@ -77,9 +77,7 @@ class OrdersController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
-            $filter->scope('new', '最近修改')
-                ->whereDate('created_at', date('Y-m-d'))
-                ->orWhere('updated_at', date('Y-m-d'));
+            $filter->whereDate('created_at', date('Y-m-d'));
         });
 
         return $grid;
