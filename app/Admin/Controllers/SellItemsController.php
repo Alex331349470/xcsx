@@ -39,7 +39,7 @@ class SellItemsController extends AdminController
                 return '请让教练指定套餐中选择好训练车辆';
             }
 
-            if (($item->car_id) || ($status = Car::query()->where('id', $item->car_id)->first()->status)) {
+            if (Car::query()->where('id',$item->car_id)->first()->status == 1) {
                 $item->car_id = null;
                 $item->save();
                 return '该车辆正在使用中';
