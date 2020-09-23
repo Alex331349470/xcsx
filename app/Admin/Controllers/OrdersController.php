@@ -33,11 +33,6 @@ class OrdersController extends AdminController
         $grid = new Grid(new Order());
         Admin::style('.box-body{overflow:scroll;}');
 
-        $grid->header(function ($query){
-            $view = view('order.order');
-            return new Box('test',$view);
-        });
-
         $grid->selector(function (Grid\Tools\Selector $selector) {
             $selector->select('status', '运营状态', [
                 0 => '完成',
@@ -101,6 +96,65 @@ class OrdersController extends AdminController
      * @param mixed $id
      * @return Show
      */
+
+    protected function orderList()
+    {
+        $grid = new Grid(new Order());
+        Admin::style('.box-body{overflow:scroll;}');
+
+        $grid->header(function ($query) {
+            $view = view('order.order');
+            return new Box('test', $view);
+        });
+
+        $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
+        $grid->column('id', __('Id值'));
+        $grid->column('car', __('车辆名称'))->display(function () {
+            $name = Car::query()->where('id', $this->car_id)->first()->name;
+            return $name;
+        });
+
+        $grid->column('sell_item', __('套餐名称'))->display(function () {
+            $name = SellItem::query()->where('id', $this->sell_item_id)->first()->name;
+            return $name;
+        });
+
+        $grid->column('no', __('订单号'));
+        $grid->column('left_time', __('剩余时间'));
+        $grid->column('income', __('收入'));
+        $grid->column('paid_at', __('付款时间'));
+        $grid->column('payment_no', __('付款流水号'));
+
+        $grid->column('status', __('订单状态'))->display(function ($value) {
+            if ($value == 0) {
+                return '完成';
+            } elseif ($value == 2) {
+                return '停止';
+            } else {
+                return '进行';
+            }
+        });
+
+        $grid->column('pay_man', __('付款人'));
+
+        $grid->disableCreateButton();
+
+        $grid->disableActions();
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('no', '订单号');
+        });
+
+        $grid->footer(function ($query) {
+            $data = $query->sum('income');
+            $data = $data - ($data * 6)/1000;
+            return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
+        });
+
+        return $grid;
+    }
+
     protected function detail($id)
     {
         $show = new Show(Order::findOrFail($id));
