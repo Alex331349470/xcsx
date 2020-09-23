@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\QrCode;
+use App\Models\Car;
 use App\Models\SellItem;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -31,11 +32,15 @@ class SellItemsController extends AdminController
 
         $grid = new Grid(new SellItem());
 
-        $grid->column('id', __('支付码-ID'))->qrcode(function ($value)  {
+        $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
             $item = SellItem::query()->where('id', $value)->first();
 
             if ($item->car_id == null) {
-                return '选择车辆';
+                return '请让教练指定套餐中选择好训练车辆';
+            }
+
+            if ((!empty($item->car_id)) || ($status = Car::query()->where('id', $item->car_id)->first()->status)) {
+                return '该车辆正在使用中';
             }
 
             $url = 'http://car.agelove.cn/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
