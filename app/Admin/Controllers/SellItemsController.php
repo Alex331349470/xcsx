@@ -33,9 +33,13 @@ class SellItemsController extends AdminController
         $grid = new Grid(new SellItem());
 
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value)  {
-            $car_id = SellItem::query()->where('id', $value)->first()->car_id;
+            $car = SellItem::query()->where('id', $value)->first();
 
-            $url = 'http://car.agelove.cn/api/v1/cars/' . $car_id . '/sell_items/' . $value . '/payment ';
+            if ($car->car_id == 0) {
+                $response = new Response();
+                return $response->error('选择车辆')->refresh();
+            }
+            $url = 'http://car.agelove.cn/api/v1/cars/' . $car->car_id . '/sell_items/' . $value . '/payment ';
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
@@ -46,6 +50,9 @@ class SellItemsController extends AdminController
 
             $data = curl_exec($ch);
             curl_close($ch);
+
+            $car->car_id = 0;
+            $car->save();
 
             return $data;
         });
