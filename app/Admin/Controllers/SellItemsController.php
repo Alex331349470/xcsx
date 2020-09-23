@@ -47,7 +47,7 @@ class SellItemsController extends AdminController
             curl_close($ch);
             return $data;
 //
-        });
+        })->loading([1,2,3]);
 //
         $grid->column('time', __('时间(秒)'));
         $grid->column('name', __('套餐名称'));
