@@ -88,7 +88,6 @@ class CarsController extends AdminController
         $driver_school_lv1 = DriverSchool::query()->get(['id','name'])->pluck('name','id');
         $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
         $form->text('serial_num', __('车辆标识码'))->rules('required');
-        $form->switch('status',__('状态'));
         $form->text('name', __('车辆名称'))->rules('required|string|min:3');
 
         return $form;
