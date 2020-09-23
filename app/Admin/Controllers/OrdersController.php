@@ -75,6 +75,11 @@ class OrdersController extends AdminController
             $actions->add(new Start);
         });
 
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('car', '车辆名称');
+        });
+
         return $grid;
     }
 
