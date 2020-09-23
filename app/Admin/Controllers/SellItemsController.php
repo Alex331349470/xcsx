@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\QrCode;
 use App\Models\SellItem;
+use Encore\Admin\Actions\Response;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -27,14 +28,19 @@ class SellItemsController extends AdminController
      */
     protected function grid()
     {
+        $response = new Response();
         Admin::style('.box-body{overflow: scroll;}');
+
         $grid = new Grid(new SellItem());
 
+        $grid->column('id', __('支付码-ID'))->qrcode(function ($value) use ($response) {
+            $car = SellItem::query()->where('id', $value)->first();
 
-        $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
-            $car_id = SellItem::query()->where('id', $value)->first()->car_id;
+            if (!$car->car_id) {
+                return $response->error('请选择车辆')->refresh();
+            }
 
-            $url = 'http://car.agelove.cn/api/v1/cars/' . $car_id . '/sell_items/' . $value . '/payment ';
+            $url = 'http://car.agelove.cn/api/v1/cars/' . $car->car_id . '/sell_items/' . $value . '/payment ';
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
@@ -45,10 +51,12 @@ class SellItemsController extends AdminController
 
             $data = curl_exec($ch);
             curl_close($ch);
+            $car->car_id = '';
+            $car->save();
+
             return $data;
-//
-        })->loading([1,2,3]);
-//
+        });
+
         $grid->column('time', __('时间(秒)'));
         $grid->column('name', __('套餐名称'));
         $grid->column('price', __('价格'));

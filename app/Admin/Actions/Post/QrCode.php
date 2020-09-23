@@ -23,17 +23,9 @@ class QrCode extends RowAction
 
     public function form()
     {
-//        $car = [];
-//        $cars = Car::all();
-//        foreach ($cars as $ca) {
-//            array_push($car, $ca->name);
-//        }
-        $driver_school_lv1 = Car::query()->get(['id','name'])->pluck('name','id');
-//        $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
-        $this->select('car_id', __('训练车名称'))->options($driver_school_lv1);
-//        $this->select()
+        $car_lv1 = Car::query()->get(['id','name'])->pluck('name','id');
 
-//        $this->checkbox('car', '车辆')->options($car);
+        $this->select('car_id', __('训练车名称'))->options($car_lv1);
     }
 
 }
