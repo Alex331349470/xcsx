@@ -12,6 +12,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Widgets\Box;
 
 class OrdersController extends AdminController
 {
@@ -33,7 +34,9 @@ class OrdersController extends AdminController
         Admin::style('.box-body{overflow:scroll;}');
 
         $grid->header(function ($query){
-            
+            $view = view('order.order');
+
+            return new Box('收入',$view);
         });
 
         $grid->selector(function (Grid\Tools\Selector $selector) {
