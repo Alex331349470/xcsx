@@ -38,13 +38,13 @@ class OrdersController extends AdminController
             return new Box('test',$view);
         });
 
-//        $grid->selector(function (Grid\Tools\Selector $selector) {
-//            $selector->select('status', '运营状态', [
-//                0 => '完成',
-//                1 => '进行',
-//                2 => '停止',
-//            ]);
-//        });
+        $grid->selector(function (Grid\Tools\Selector $selector) {
+            $selector->select('status', '运营状态', [
+                0 => '完成',
+                1 => '进行',
+                2 => '停止',
+            ]);
+        });
         $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
         $grid->column('id', __('Id值'));
         $grid->column('car', __('车辆名称'))->display(function () {
