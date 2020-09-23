@@ -5,10 +5,10 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ["9-23", "9-24", "9-25", "9-26", "9-27", "8-28"],
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: '收入详情',
+                    data: [0.03, 0, 0, 0, 0, 0],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -25,7 +25,7 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 0.5
                 }]
             },
             options: {
