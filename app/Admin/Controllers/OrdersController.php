@@ -77,7 +77,7 @@ class OrdersController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
-            $filter->whereDate('created_at', date('Y-m-d'));
+            $filter->scope('no')->whereDate('created_at',date('Y-m-d'));
         });
 
         return $grid;
