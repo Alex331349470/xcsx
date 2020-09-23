@@ -1,4 +1,4 @@
-<canvas id="myChart" width="200" height="200"></canvas>
+<canvas id="myChart" width="200" height="50"></canvas>
 <script>
     $(function () {
         var ctx = document.getElementById("myChart").getContext('2d');
@@ -25,7 +25,7 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 0.5
+                    borderWidth: 0.01
                 }]
             },
             options: {

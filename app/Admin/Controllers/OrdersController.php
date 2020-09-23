@@ -33,13 +33,17 @@ class OrdersController extends AdminController
         $grid = new Grid(new Order());
         Admin::style('.box-body{overflow:scroll;}');
 
-        $grid->selector(function (Grid\Tools\Selector $selector) {
-            $selector->select('status', '运营状态', [
-                0 => '完成',
-                1 => '进行',
-                2 => '停止',
-            ]);
+        $grid->header(function ($query) {
+            $view = view('order.order');
+            return new Box('收入详情', $view);
         });
+//        $grid->selector(function (Grid\Tools\Selector $selector) {
+//            $selector->select('status', '运营状态', [
+//                0 => '完成',
+//                1 => '进行',
+//                2 => '停止',
+//            ]);
+//        });
         $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
         $grid->column('id', __('Id值'));
         $grid->column('car', __('车辆名称'))->display(function () {
@@ -84,6 +88,7 @@ class OrdersController extends AdminController
 
         $grid->footer(function ($query) {
             $data = $query->sum('income');
+            $data = $data - ($data * 6)/1000;
             return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
         });
 
