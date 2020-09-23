@@ -34,7 +34,8 @@ class OrdersController extends AdminController
         Admin::style('.box-body{overflow:scroll;}');
 
         $grid->header(function ($query) {
-            $view = view('order.order');
+            $data = \DB::table('orders')->where('paid_at','like','%2020-09-24%')->sum('income');
+            $view = view('order.order',compact('data'));
             return new Box('收入详情', $view);
         });
 //        $grid->selector(function (Grid\Tools\Selector $selector) {
