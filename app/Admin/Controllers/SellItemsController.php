@@ -4,7 +4,6 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\QrCode;
 use App\Models\SellItem;
-use Encore\Admin\Actions\Response;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -35,10 +34,6 @@ class SellItemsController extends AdminController
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value)  {
             $car = SellItem::query()->where('id', $value)->first();
 
-            if ($car->car_id == 0) {
-                $response = new Response();
-                return $response->error('选择车辆')->refresh();
-            }
             $url = 'http://car.agelove.cn/api/v1/cars/' . $car->car_id . '/sell_items/' . $value . '/payment ';
             $ch = curl_init();
 
