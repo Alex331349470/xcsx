@@ -28,15 +28,15 @@ class SellItemsController extends AdminController
      */
     protected function grid()
     {
-        $response = new Response();
         Admin::style('.box-body{overflow: scroll;}');
 
         $grid = new Grid(new SellItem());
 
-        $grid->column('id', __('支付码-ID'))->qrcode(function ($value) use ($response) {
+        $grid->column('id', __('支付码-ID'))->qrcode(function ($value)  {
             $car = SellItem::query()->where('id', $value)->first();
 
             if (!$car->car_id) {
+                $response = new Response();
                 return $response->error('请选择车辆')->refresh();
             }
 
@@ -51,6 +51,7 @@ class SellItemsController extends AdminController
 
             $data = curl_exec($ch);
             curl_close($ch);
+
             $car->car_id = null;
             $car->save();
 
