@@ -98,6 +98,7 @@ class SellItemsController extends AdminController
     {
         $form = new Form(new SellItem());
 
+        $form->number('car_id',__('车辆id'))->default(0);
         $form->number('time', __('时间(秒)'));
         $form->text('name', __('套餐名称'));
         $form->decimal('price', __('价格'))->default(0.00);
