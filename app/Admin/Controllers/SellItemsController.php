@@ -51,7 +51,7 @@ class SellItemsController extends AdminController
 
             $data = curl_exec($ch);
             curl_close($ch);
-            $car->car_id = '';
+            $car->car_id = null;
             $car->save();
 
             return $data;
