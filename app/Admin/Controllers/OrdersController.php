@@ -31,6 +31,11 @@ class OrdersController extends AdminController
     {
         $grid = new Grid(new Order());
         Admin::style('.box-body{overflow:scroll;}');
+
+        $grid->header(function ($query){
+
+        });
+
         $grid->selector(function (Grid\Tools\Selector $selector) {
             $selector->select('status', '运营状态', [
                 0 => '完成',
@@ -73,6 +78,11 @@ class OrdersController extends AdminController
         $grid->actions(function ($actions){
             $actions->add(new Stop);
             $actions->add(new Start);
+        });
+        
+        $grid->footer(function ($query){
+            $data = $query->sum('income');
+            return "<div style='padding: 10px;'>总收入 ： $data</div>";
         });
 
         return $grid;
