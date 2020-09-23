@@ -68,7 +68,10 @@ class SellItemsController extends AdminController
         $grid->column('name', __('套餐名称'));
         $grid->column('price', __('价格'));
 
-
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('name', '套餐名称');
+        });
         $grid->actions(function ($actions) {
             $actions->add(new QrCode);
         });

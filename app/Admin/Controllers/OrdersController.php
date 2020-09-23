@@ -44,16 +44,18 @@ class OrdersController extends AdminController
             $name = Car::query()->where('id', $this->car_id)->first()->name;
             return $name;
         });
-//        $grid->column('driver_school_id', __('Driver school id'));
+
         $grid->column('sell_item', __('套餐名称'))->display(function () {
             $name = SellItem::query()->where('id', $this->sell_item_id)->first()->name;
             return $name;
         });
+
         $grid->column('no', __('订单号'));
         $grid->column('left_time', __('剩余时间'));
         $grid->column('income', __('收入'));
         $grid->column('paid_at', __('付款时间'));
         $grid->column('payment_no', __('付款流水号'));
+
         $grid->column('status',__('订单状态'))->display(function ($value){
             if ($value == 0) {
                 return '完成';
@@ -63,6 +65,7 @@ class OrdersController extends AdminController
                 return '进行';
             }
         });
+
         $grid->column('pay_man',__('付款人'));
 
         $grid->disableCreateButton();

@@ -30,14 +30,14 @@ class CarsController extends AdminController
         $grid = new Grid(new Car());
         Admin::style('.box-body{overflow:scroll;}');
         $grid->column('id', __('Id'));
-        $grid->column('driver_school', __('所属驾校'))->display(function (){
+        $grid->column('driver_school', __('所属驾校'))->display(function () {
             $driverSchool = DriverSchool::query()->whereId($this->driver_school_id)->first();
             return $driverSchool->name;
         });
 
         $grid->column('serial_num', __('车辆标识码'));
         $grid->column('name', __('车辆名称'));
-        $grid->column('status', __('车辆状态'))->display(function ($value){
+        $grid->column('status', __('车辆状态'))->display(function ($value) {
             if ($value == 1) {
                 return '运行';
             } else {
@@ -48,6 +48,12 @@ class CarsController extends AdminController
         $grid->column('end', __('结束时间'));
 
         $grid->disableExport();
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('name', '车辆名称');
+        });
+
         return $grid;
     }
 
@@ -62,8 +68,8 @@ class CarsController extends AdminController
         $show = new Show(Car::findOrFail($id));
 
         $show->field('id', __('Id值'));
-        $show->field('driver_school', __('所属驾校'))->as(function (){
-            $name = DriverSchool::query()->where('id',$this->driver_school_id)->first()->name;
+        $show->field('driver_school', __('所属驾校'))->as(function () {
+            $name = DriverSchool::query()->where('id', $this->driver_school_id)->first()->name;
             return $name;
         });
         $show->field('name', __('车辆名称'));
@@ -85,7 +91,7 @@ class CarsController extends AdminController
     {
         $form = new Form(new Car());
 
-        $driver_school_lv1 = DriverSchool::query()->get(['id','name'])->pluck('name','id');
+        $driver_school_lv1 = DriverSchool::query()->get(['id', 'name'])->pluck('name', 'id');
         $form->select('driver_school_id', __('驾校名称'))->options($driver_school_lv1)->required();
         $form->text('serial_num', __('车辆标识码'))->rules('required');
         $form->text('name', __('车辆名称'))->rules('required|string|min:3');
