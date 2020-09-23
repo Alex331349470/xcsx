@@ -82,6 +82,11 @@ class OrdersController extends AdminController
             $actions->add(new Start);
         });
 
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('no', '订单号');
+        });
+
         $grid->footer(function ($query) {
             $data = $query->sum('income');
             return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
