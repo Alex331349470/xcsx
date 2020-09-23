@@ -40,6 +40,8 @@ class SellItemsController extends AdminController
             }
 
             if ((!empty($item->car_id)) || ($status = Car::query()->where('id', $item->car_id)->first()->status)) {
+                $item->car_id = null;
+                $item->save();
                 return '该车辆正在使用中';
             }
 
