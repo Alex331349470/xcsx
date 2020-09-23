@@ -33,7 +33,7 @@ class OrdersController extends AdminController
         Admin::style('.box-body{overflow:scroll;}');
 
         $grid->header(function ($query){
-
+            
         });
 
         $grid->selector(function (Grid\Tools\Selector $selector) {
@@ -79,10 +79,10 @@ class OrdersController extends AdminController
             $actions->add(new Stop);
             $actions->add(new Start);
         });
-        
+
         $grid->footer(function ($query){
             $data = $query->sum('income');
-            return "<div style='padding: 10px;'>总收入 ： $data</div>";
+            return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
         });
 
         return $grid;
