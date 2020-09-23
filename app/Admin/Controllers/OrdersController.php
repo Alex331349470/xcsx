@@ -52,7 +52,7 @@ class OrdersController extends AdminController
 
         $grid->column('no', __('订单号'));
         $grid->column('left_time', __('剩余时间'));
-        $grid->column('income', __('收入'));
+        $grid->column('income', __('收入'))->totalRow('总收');
         $grid->column('paid_at', __('付款时间'));
         $grid->column('payment_no', __('付款流水号'));
 
@@ -67,7 +67,6 @@ class OrdersController extends AdminController
         });
 
         $grid->column('pay_man',__('付款人'));
-        $grid->column('income','总收入')->totalRow();
 
         $grid->disableCreateButton();
 
