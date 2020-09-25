@@ -22,11 +22,6 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.sign'))
             ->group(function () {
-                //api版本
-                Route::get('version', function () {
-                    return 'this is version 1';
-                })->name('version');
-
                 //登录
                 Route::post('authorizations', 'AuthorizationsController@store')
                     ->name('authorization.store');
