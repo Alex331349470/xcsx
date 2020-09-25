@@ -15,8 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('car_id')->index()->comment('外键车辆id');
-            $table->integer('sell_item_id')->index()->nullable()->comment('外键套餐id');
+            $table->unsignedBigInteger('car_id')->index()->comment('外键车辆id');
+            $table->unsignedBigInteger('sell_item_id')->index()->nullable()->comment('外键套餐id');
             $table->string('no')->nullable()->comment('订单号');
             $table->mediumInteger('left_time')->default(0)->comment('剩余时间/秒');
             $table->decimal('income')->default(0)->comment('收入');
@@ -25,6 +25,8 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('status')->default(0)->comment('订单状态');
             $table->string('pay_man')->nullable()->comment('付款人');
             $table->boolean('refund')->default(false)->comment('退款状态');
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
+            $table->foreign('sell_item_id')->references('id')->on('sell_items')->onDelete('cascade');
             $table->timestamps();
         });
     }

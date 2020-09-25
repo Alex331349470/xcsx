@@ -15,13 +15,14 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->integer('driver_school_id')->index()->comment('外键驾校id');
+            $table->unsignedBigInteger('driver_school_id')->index()->comment('外键驾校id');
             $table->string('name')->comment('姓名');
             $table->string('phone')->comment('手机号');
             $table->string('email')->nullable()->comment('邮箱');
             $table->string('address')->nullable()->comment('地址');
             $table->string('password')->comment('密码');
             $table->rememberToken();
+            $table->foreign('driver_school_id')->references('id')->on('driver_schools')->onDelete('cascade');
             $table->timestamps();
         });
     }
