@@ -41,6 +41,7 @@ class OrdersController extends AdminController
             for ($i = 0; $i < 7; $i++) {
                 $day = Carbon::now()->addDays((-3 + $i))->toDateString();
                 $data = \DB::table('orders')->where('paid_at', 'like', '%' . $day . '%')->sum('income');
+                $day = substr($day,5);
                 array_push($days, $day);
                 array_push($total, $data);
             }
