@@ -7,6 +7,7 @@ use App\Admin\Actions\Post\Stop;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\SellItem;
+use Carbon\Carbon;
 use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -34,8 +35,18 @@ class OrdersController extends AdminController
         Admin::style('.box-body{overflow:scroll;}');
 
         $grid->header(function ($query) {
-            $data = \DB::table('orders')->where('paid_at','like','%2020-09-26%')->sum('income');
-            $view = view('order.order',compact('data'));
+            $days = [];
+            $total = [];
+
+            for ($i = 0; $i < 7; $i++) {
+                $day = Carbon::now()->addDays((-3 + $i))->toDateString();
+                $data = \DB::table('orders')->where('paid_at', 'like', '%' . $day . '%')->sum('income');
+                array_push($days, $day);
+                array_push($total, $data);
+            }
+
+
+            $view = view('order.order', compact('total', 'days'));
             return new Box('收入详情', $view);
         });
 //        $grid->selector(function (Grid\Tools\Selector $selector) {
@@ -89,7 +100,7 @@ class OrdersController extends AdminController
 
         $grid->footer(function ($query) {
             $data = $query->sum('income');
-            $income = $data - ($data * 6)/1000;
+            $income = $data - ($data * 6) / 1000;
             return "<div style='padding: 10px;'>总收 ： $data 元 (实收： $income 元)</div>";
         });
 
@@ -154,7 +165,7 @@ class OrdersController extends AdminController
 
         $grid->footer(function ($query) {
             $data = $query->sum('income');
-            $data = $data - ($data * 6)/1000;
+            $data = $data - ($data * 6) / 1000;
             return "<div style='padding: 10px;'>总收入 ： $data 元</div>";
         });
 

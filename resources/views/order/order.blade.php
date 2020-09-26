@@ -5,10 +5,11 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["9-23", "9-24", "9-25", "9-26", "9-27", "9-28"],
+                labels: ['{{$days[0]}}', '{{$days[1]}}', '{{$days[2]}}', '{{$days[3]}}', '{{$days[4]}}', '{{$days[5]}}', '{{$days[6]}}'],
+
                 datasets: [{
                     label: '收入详情',
-                    data: [0, 0, 0.06, {{ $data }}, 0, 0],
+                    data: [{{$total[0]}}, {{$total[1]}}, {{$total[2]}}, {{$total[3]}}, {{$total[4]}}, {{$total[5]}},{{$total[6]}}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
