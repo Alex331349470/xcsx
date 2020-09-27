@@ -57,6 +57,13 @@ Route::prefix('v1')
 
                 Route::post('orders/{order}/cars/{car}/start', 'OrdersController@start')
                     ->name('order.start');
+
+                Route::group(['middleware' => ['wechat.oauth']],function(){
+                    Route::get('/we_user', function () {
+                        $user = session('wechat.oauth_user.default');
+                        dd($user);
+                    });
+                });
                 //非Authorization的api
                 Route::middleware('auth:api')->group(function () {
                     //用户信息
