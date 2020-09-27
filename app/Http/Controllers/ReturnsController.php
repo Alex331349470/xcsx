@@ -34,20 +34,6 @@ class ReturnsController extends Controller
             'status' => 1,
         ]);
 
-        $officialAccount = \EasyWeChat::officialAccount();
-
-        $sub_data = [
-            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
-            'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk
-',
-            'data' => [
-                'name' => '测试',
-                'number' => '1'
-            ],
-        ];
-
-        $officialAccount->template_message->send($sub_data);
-
         $this->afterPaid($order);
 
         return app('wechat_pay')->success();

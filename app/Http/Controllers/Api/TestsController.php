@@ -10,13 +10,7 @@ class TestsController extends Controller
 {
     public function test()
     {
-        $days = [];
-        for ($i = 0; $i < 7; $i++) {
-            $day = Carbon::now()->addDays((-3 + $i))->toDateString();
-            array_push($days, $day);
-        }
 
-        dd($days);
 
 //        $serial_num = '32094';
 //        $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id='.$serial_num.'&member_id=319');
