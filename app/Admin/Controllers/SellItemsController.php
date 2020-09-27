@@ -36,7 +36,7 @@ class SellItemsController extends AdminController
             $item = SellItem::query()->where('id', $value)->first();
 
             if ($item->car_id == null) {
-                return '请让教练指定套餐中选择好训练车辆';
+                return '请选择好训练车辆';
             }
 
             if (Car::query()->where('id',$item->car_id)->first()->status == 1) {
