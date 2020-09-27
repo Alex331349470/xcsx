@@ -98,6 +98,7 @@ class OrdersController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('no', '订单号');
+            $filter->between('paid_at','付款时间')->datetime();
         });
 
         $grid->footer(function ($query) {
@@ -180,6 +181,7 @@ class OrdersController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('no', '订单号');
+            $filter->between('paid_at','付款时间')->datetime();
         });
 
         $grid->footer(function ($query) {
