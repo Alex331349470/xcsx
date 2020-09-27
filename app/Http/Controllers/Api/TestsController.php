@@ -10,7 +10,18 @@ class TestsController extends Controller
 {
     public function test()
     {
+        $officialAccount = \EasyWeChat::officialAccount();
+        $sub_data = [
+            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+            'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk
+',
+            'data' => [
+                'name' => 'VALUE',
+                'number' => 'VALUE2',
+            ],
+        ];
 
+        $officialAccount->template_message->send($sub_data);
 
 //        $serial_num = '32094';
 //        $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id='.$serial_num.'&member_id=319');
