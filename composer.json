@@ -19,6 +19,7 @@
         "laravel-admin-ext/geetest": "dev-master",
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "overtrue/laravel-lang": "~3.0",
         "overtrue/laravel-pinyin": "~4.0",
         "overtrue/laravel-socialite": "~2.0",

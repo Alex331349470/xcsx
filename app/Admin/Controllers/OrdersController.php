@@ -108,6 +108,8 @@ class OrdersController extends AdminController
             return "<div style='padding: 10px;'>总收 ： $data 元 (实收： $income 元)</div>";
         });
 
+        $grid->exporter(new OrderExporter());
+
         return $grid;
     }
 
@@ -191,7 +193,7 @@ class OrdersController extends AdminController
             return "<div style='padding: 10px;'>总收 ： $data 元 (实收： $income 元)</div>";
         });
 
-//        $grid->exporter(new OrderExporter());
+        $grid->exporter(new OrderExporter());
 
         return $grid;
     }
