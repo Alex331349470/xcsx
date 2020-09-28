@@ -29,6 +29,8 @@ class DriverSchoolsController extends AdminController
         $grid->column('id', __('Id值'));
         $grid->column('name', __('学校名称'));
 
+        $grid->disableExport();
+
         return $grid;
     }
 

@@ -76,6 +76,8 @@ class SellItemsController extends AdminController
             $actions->add(new QrCode);
         });
 
+        $grid->disableExport();
+
         return $grid;
     }
 

@@ -40,6 +40,7 @@ class UsersController extends AdminController
         $grid->column('email', __('邮箱地址'));
         $grid->column('address', __('运营地址'));
 
+        $grid->disableExport();
         return $grid;
     }
 

@@ -1,4 +1,4 @@
-<canvas id="myChart" width="200" height="50"></canvas>
+<canvas id="myChart" width="200" height="80"></canvas>
 <script>
     $(function () {
         var ctx = document.getElementById("myChart").getContext('2d');

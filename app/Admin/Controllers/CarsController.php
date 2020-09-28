@@ -54,6 +54,8 @@ class CarsController extends AdminController
             $filter->like('name', '车辆名称');
         });
 
+        $grid->disableExport();
+
         return $grid;
     }
 
