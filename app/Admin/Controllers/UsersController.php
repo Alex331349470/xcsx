@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\DriverSchool;
 use App\Models\User;
+use Encore\Admin\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -26,6 +27,8 @@ class UsersController extends AdminController
      */
     protected function grid()
     {
+        Admin::style('.box-body{overflow: scroll;}');
+
         $grid = new Grid(new User());
 
         $grid->column('id', __('Id值'));
