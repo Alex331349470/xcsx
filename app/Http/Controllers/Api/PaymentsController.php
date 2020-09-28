@@ -18,7 +18,6 @@ class PaymentsController extends Controller
 
         $school = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
 
-        $school_name = pinyin_abbr($school);
         $order = Order::create([
             'car_id' => $car->id,
             'sell_item_id' => $sellItem->id,
@@ -27,7 +26,7 @@ class PaymentsController extends Controller
         ]);
 
         $wechatOrder = app('wechat_pay')->scan([
-            'out_trade_no' => $school_name . $order->no,
+            'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
             'body' => '支付订单：' . $school . '-' . $order->no,
         ]);
