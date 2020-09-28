@@ -41,22 +41,27 @@ class ReturnsController extends Controller
 
         $name = SellItem::query()->where('id', $order->sell_item_id)->first()->name;
         $car = Car::query()->where('id', $order->car_id)->first()->name;
-        $openId = User::query()->first()->openId;
-
-        $sub_data = [
+//        $openId = User::query()->first()->openId;
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($openId = $user->openId) {
+                $sub_data = [
 //            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
-            'touser' => $openId,
-            'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk',
-            'data' => [
-                'productType' => '套餐名称',
-                'name' => $name,
-                'number' => 1,
-                'expDate' => Carbon::now()->toDateString(),
-                'remark' => '套餐已购买，训练车为' . $car . ',金额为' . $order->income . '元，训练时间为' . $order->left_time . '秒，请学员立即上车训练'
-            ],
-        ];
+                    'touser' => $openId,
+                    'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk',
+                    'data' => [
+                        'productType' => '套餐名称',
+                        'name' => $name,
+                        'number' => 1,
+                        'expDate' => Carbon::now()->toDateString(),
+                        'remark' => '套餐已购买，训练车为' . $car . ',金额为' . $order->income . '元，训练时间为' . $order->left_time . '秒，请学员立即上车训练'
+                    ],
+                ];
 
-        $officialAccount->template_message->send($sub_data);
+                $officialAccount->template_message->send($sub_data);
+            }
+        }
+
 
         $this->afterPaid($order);
 
