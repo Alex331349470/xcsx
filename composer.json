@@ -20,6 +20,7 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "overtrue/laravel-lang": "~3.0",
+        "overtrue/laravel-pinyin": "~4.0",
         "overtrue/laravel-socialite": "~2.0",
         "overtrue/laravel-wechat": "~5.0",
         "ratchet/pawl": "^0.3.5",
