@@ -47,7 +47,7 @@ class ReturnsController extends Controller
                 'name' => $name,
                 'number' => 1,
                 'expDate' => Carbon::now()->toDateString(),
-                'remark' => '套餐已购买，训练时间为'.$order->left_time.'秒，请学员立即上车训练'
+                'remark' => '套餐已购买，金额为'.$order->income.'元，训练时间为'.$order->left_time.'秒，请学员立即上车训练'
             ],
         ];
 
