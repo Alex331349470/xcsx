@@ -15,7 +15,6 @@ class VerifyCsrfToken extends Middleware
         'wechat',
         'payment/wechat/notify',
         'wechat/menu',
-        'user',
-        'admin/*'
+        'user'
     ];
 }

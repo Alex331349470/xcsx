@@ -8,6 +8,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use GuzzleHttp\Client;
 
 class UsersController extends AdminController
 {
@@ -81,7 +82,10 @@ class UsersController extends AdminController
         $form->password('password', __('密码'));
 
         $form->saving(function (Form $form){
+            $client = new Client();
+            $openid = $client->get('http://car.agelove.cn/user');
             $form->password = bcrypt($form->password);
+            $form->openId = $openid;
         });
 
         return $form;
