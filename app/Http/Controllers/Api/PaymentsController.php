@@ -15,8 +15,8 @@ class PaymentsController extends Controller
         if ($car->status == true) {
             abort(403, '车辆正在使用中');
         }
-
-        $school = pinyin_abbr(DriverSchool::query()->where('id', $car->driver_school_id)->first()->name);
+        $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
+        $school_pinyin = pinyin_abbr($school_name);
 
         $order = Order::create([
             'car_id' => $car->id,
@@ -25,13 +25,13 @@ class PaymentsController extends Controller
             'income' => $sellItem->price,
         ]);
 
-        $order->no = $school . $order->no;
+        $order->no = $school_pinyin . $order->no;
         $order->save();
 
         $wechatOrder = app('wechat_pay')->scan([
             'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
-            'body' => '支付订单：' . $school . '-' . $order->no,
+            'body' => '支付订单：' . $school_name . '-' . $order->no,
         ]);
 
 //        $qrCode = new QrCode($wechatOrder->code_url);
