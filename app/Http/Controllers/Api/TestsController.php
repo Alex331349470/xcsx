@@ -11,12 +11,16 @@ class TestsController extends Controller
     public function test()
     {
         $officialAccount = \EasyWeChat::officialAccount();
+
         $sub_data = [
             'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
             'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk',
             'data' => [
-                'name' => 'VALUE',
-                'number' => 'VALUE2',
+                'productType' => '',
+                'name' => '',
+                'number' => '',
+                'expDate' => '',
+                'remark' => ''
             ],
         ];
 

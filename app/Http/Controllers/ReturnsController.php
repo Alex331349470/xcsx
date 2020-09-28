@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\OrderPaid;
 use App\Models\Order;
+use App\Models\SellItem;
 use Carbon\Carbon;
 use EasyWeChat\Factory;
 use Illuminate\Http\Request;
@@ -30,9 +31,27 @@ class ReturnsController extends Controller
         $order->update([
             'paid_at' => Carbon::now(),
             'payment_no' => $data->transaction_id,
-            'pay_man' => 'normal_man',
+            'pay_man' => '教练员',
             'status' => 1,
         ]);
+
+        $officialAccount = \EasyWeChat::officialAccount();
+
+        $name = SellItem::query()->where('id',$order->sell_item_id)->first()->name;
+
+        $sub_data = [
+            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+            'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk',
+            'data' => [
+                'productType' => '套餐名称',
+                'name' => $name,
+                'number' => 1,
+                'expDate' => Carbon::now()->toDateString(),
+                'remark' => '套餐已购买，请学员立即上车训练'
+            ],
+        ];
+
+        $officialAccount->template_message->send($sub_data);
 
         $this->afterPaid($order);
 
