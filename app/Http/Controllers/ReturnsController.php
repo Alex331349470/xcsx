@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\OrderPaid;
 use App\Models\Order;
 use App\Models\SellItem;
+use App\Models\User;
 use Carbon\Carbon;
 use EasyWeChat\Factory;
 use Illuminate\Http\Request;
@@ -38,9 +39,11 @@ class ReturnsController extends Controller
         $officialAccount = \EasyWeChat::officialAccount();
 
         $name = SellItem::query()->where('id',$order->sell_item_id)->first()->name;
+        $openId = User::query()->first()->openId;
 
         $sub_data = [
-            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+//            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+            'touser' => $openId,
             'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk',
             'data' => [
                 'productType' => '套餐名称',
