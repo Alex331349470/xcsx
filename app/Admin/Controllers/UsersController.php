@@ -85,11 +85,7 @@ class UsersController extends AdminController
         $form->password('password', __('密码'));
 
         $form->saving(function (Form $form){
-            $client = new Client();
-            $openid = $client->get('http://car.agelove.cn/user');
-            dd($openid);
             $form->password = bcrypt($form->password);
-            $form->openId = $openid;
         });
 
         return $form;
