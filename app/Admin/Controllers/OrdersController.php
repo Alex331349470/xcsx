@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\Start;
 use App\Admin\Actions\Post\Stop;
+use App\Admin\Extensions\OrderExporter;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\SellItem;
@@ -189,6 +190,8 @@ class OrdersController extends AdminController
             $income = $data - ($data * 6) / 1000;
             return "<div style='padding: 10px;'>总收 ： $data 元 (实收： $income 元)</div>";
         });
+
+        $grid->exporter(new OrderExporter());
 
         return $grid;
     }
