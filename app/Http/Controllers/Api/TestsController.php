@@ -21,10 +21,10 @@ class TestsController extends Controller
             'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
             'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
             'data' => [
-                'first' => '',
-                'event' => '',
-                'finish_time' => '',
-                'remark' => '',
+                'first' => 'value',
+                'event' => 'value',
+                'finish_time' => 'value',
+                'remark' => 'value',
             ],
         ];
 
