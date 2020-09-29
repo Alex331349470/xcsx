@@ -4,6 +4,7 @@ namespace App\Admin\Actions\Post;
 
 use App\Jobs\CarStatus;
 use App\Models\Car;
+use App\Models\User;
 use Carbon\Carbon;
 use Encore\Admin\Actions\RowAction;
 use GuzzleHttp\Client;
@@ -24,7 +25,6 @@ class Start extends RowAction
         $this->controlCar($time, $serial_num);
 
 
-
         $car->update([
             'status' => true,
             'start' => Carbon::now(),
@@ -32,6 +32,29 @@ class Start extends RowAction
         ]);
 
         CarStatus::dispatch($car, $model, $model->left_time);
+
+        $officialAccount = \EasyWeChat::officialAccount();
+
+        $users = User::all();
+
+        foreach ($users as $user) {
+
+            if ($openId = $user->openId) {
+                $sub_data = [
+                    'touser' => $openId,
+//                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+                    'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
+                    'data' => [
+                        'first' => '车辆计时继续运行',
+                        'event' => '由' . $car->name . '训练车计时运行',
+                        'finish_time' => Carbon::now()->toDateTimeString(),
+                        'remark' => '订单' . $model->no . '由' . $car->name . '训练车继续计时运行' . $model->left_time,
+                    ],
+                ];
+
+                $officialAccount->template_message->send($sub_data);
+            }
+        }
 
         return $this->response()->success('续单成功')->refresh();
     }
