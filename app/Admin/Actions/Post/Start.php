@@ -45,10 +45,10 @@ class Start extends RowAction
 //                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
                     'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
                     'data' => [
-                        'first' => '车辆计时继续运行',
-                        'event' => '由' . "<div style='color: red'>" . $car->name . "</div>" . '训练车计时运行',
+                        'first' => ['value' => '车辆计时继续运行','color' => '#FF0000'],
+                        'event' => ['value' => '由' . $car->name . '训练车计时运行', 'color' => '#FF0000'],
                         'finish_time' => Carbon::now()->toDateTimeString(),
-                        'remark' => '订单' . "<div style='color: red'>" . $model->no . "</div>" . '由' . "<div style='color: red'>" . $car->name . "</div>" . '训练车继续计时运行,该订单还剩余' . $model->left_time . '秒',
+                        'remark' => '订单' . $model->no . '由' . $car->name . '训练车继续计时运行,该订单还剩余' . $model->left_time.'秒',
                     ],
                 ];
 
