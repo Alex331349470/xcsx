@@ -65,7 +65,7 @@ class Stop extends RowAction
                         'first' => '车辆故障暂停',
                         'event' => '由于' . $car->name . '训练车故障，暂时暂停',
                         'finish_time' => Carbon::now()->toDateTimeString(),
-                        'remark' => '订单' . $model->no . '车辆故障，暂停计时，该车还剩下' . $model->left_time . ',请修复该车或变更该订单训练车辆',
+                        'remark' => '订单' . $model->no . '车辆故障，暂停计时，该车还剩下' . $model->left_time . '秒,请修复该车或变更该订单训练车辆',
                     ],
                 ];
 
