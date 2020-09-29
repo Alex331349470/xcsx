@@ -4,30 +4,31 @@ namespace App\Http\Controllers\Api;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 
 class TestsController extends Controller
 {
     public function test()
     {
-        $test = pinyin_abbr('我的世界');
+//        $userModel = new \App\Models\User();
+//        $userModel->setConnection('mysql');
+//
+//        dd($userModel->find(1));
+        $officialAccount = \EasyWeChat::officialAccount();
 
-        dd($test);
-//        $officialAccount = \EasyWeChat::officialAccount();
-//
-//        $sub_data = [
-//            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
-//            'template_id' => 'MUCyGRRr07-qwAGD08KxfxtIhdlbZ4y1wGQO70yjREk',
-//            'data' => [
-//                'productType' => '',
-//                'name' => '',
-//                'number' => '',
-//                'expDate' => '',
-//                'remark' => ''
-//            ],
-//        ];
-//
-//        $officialAccount->template_message->send($sub_data);
+        $sub_data = [
+            'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+            'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
+            'data' => [
+                'first' => '',
+                'event' => '',
+                'finish_time' => '',
+                'remark' => '',
+            ],
+        ];
+
+        $officialAccount->template_message->send($sub_data);
 
 //        $serial_num = '32094';
 //        $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id='.$serial_num.'&member_id=319');
