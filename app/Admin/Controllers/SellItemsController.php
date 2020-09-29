@@ -45,7 +45,7 @@ class SellItemsController extends AdminController
                 return '该车辆正在使用中';
             }
 
-            $url = 'http://car.agelove.cn/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
+            $url = env('APP_URL').'/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
