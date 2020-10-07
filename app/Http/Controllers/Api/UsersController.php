@@ -10,7 +10,6 @@ class UsersController extends Controller
 {
     public function me(Request $request)
     {
-        dd($request->user());
         UserResource::wrap('data');
         return new UserResource($request->user());
     }
