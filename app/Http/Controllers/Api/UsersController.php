@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
     public function me(Request $request)
     {
-        $user = User::query()->whereId($request->user()->id)->first();
+        $user = User::query()->where('id',$request->user()->id)->first();
 
         UserResource::wrap('data');
         return new UserResource($user);
