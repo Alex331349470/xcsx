@@ -17,7 +17,7 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         $data = parent::toArray($request);
-        $driver_school_id = User::query()->where('user_id',$data['id'])->first()->driver_school_id;
+        $driver_school_id = User::query()->where('id',$data['id'])->first()->driver_school_id;
         $data['school'] = DriverSchool::query()->where('id',$driver_school_id)->first();
 
         return $data;
