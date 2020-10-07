@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'email', 'address', 'password', 'driver_school_id'
+        'name', 'phone', 'email', 'address', 'password', 'driver_school_id', 'openid'
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'remember_token',
+        'remember_token', 'password', 'openid'
     ];
 
     public function School()
