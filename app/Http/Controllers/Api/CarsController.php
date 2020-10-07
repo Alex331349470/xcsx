@@ -31,6 +31,22 @@ class CarsController extends Controller
         return new CarResource($car);
     }
 
+    public function update(Car $car,Request $request)
+    {
+        $data = $request->all();
+
+        $car->update($data);
+        $car->save();
+
+        return new CarResource($car);
+    }
+
+    public function destroy(Car $car)
+    {
+        $car->delete();
+
+        return response(null,204);
+    }
     //控制车辆继电器
     public function controlCar(Request $request)
     {

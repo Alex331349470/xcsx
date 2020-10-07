@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//
 Route::any('wechat', 'WechatController@serve');
 
 Route::post('payment/wechat/notify', 'ReturnsController@wechatNotify')
@@ -21,8 +21,6 @@ Route::post('payment/wechat/notify', 'ReturnsController@wechatNotify')
 Route::get('wechat/menu','WechatController@menu');
 
 Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
-    Route::get('/user', function () {
-        $user = session('wechat.oauth_user.default'); // 拿到授权用户
-        return "<h1>".$user['id']."</h1>";
-    });
+    Route::get('/user', 'UsersController@show')
+        ->name('user.openid.show');
 });

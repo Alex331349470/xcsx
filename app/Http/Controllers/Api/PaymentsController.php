@@ -15,6 +15,7 @@ class PaymentsController extends Controller
         if ($car->status == true) {
             abort(403, '车辆正在使用中');
         }
+
         $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
         $school_pinyin = pinyin_abbr($school_name);
 
@@ -33,10 +34,6 @@ class PaymentsController extends Controller
             'total_fee' => $sellItem->price * 100,
             'body' => '支付订单：' . $school_name . '-' . $order->no,
         ]);
-
-//        $qrCode = new QrCode($wechatOrder->code_url);
-
-//        return response($qrCode->writeDataUri(), 200);
 
         return response($wechatOrder->code_url, 200);
     }

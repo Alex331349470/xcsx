@@ -25,11 +25,11 @@ class OrdersController extends Controller
         $car = Car::query()->where('id', $order->car_id)->first();
 
         $serial_num = $car->serial_num;
-
+        //连接ws服务器
         $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
         $client = new Client();
-
+        //发送获得板载信息http请求
         $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
             'query' => [
                 'us_id' => env('CAR_US_ID'),
@@ -38,8 +38,9 @@ class OrdersController extends Controller
                 'msg' => 'd100'
             ]
         ]);
+        //获取ws的message事件信息
         $message = $ws->receive();
-
+        //关闭ws连接
         $ws->close();
 
         $msg = json_decode($message, true);
@@ -51,6 +52,21 @@ class OrdersController extends Controller
         $order->save();
 
         return new OrderResource($order);
+    }
+
+    public function update(Order $order, Request $request)
+    {
+        $data = $request->all();
+        $order = $order->update($data);
+
+        return new OrderResource($order);
+    }
+
+    public function destroy(Order $order)
+    {
+        $order->delete();
+
+        return response(null, 204);
     }
 
     public function stop(Order $order)
@@ -97,7 +113,7 @@ class OrdersController extends Controller
         return response(null, 200);
     }
 
-    public function start(Order $order,Car $car)
+    public function start(Order $order, Car $car)
     {
         $time = $order->left_time;
         $serial_num = $car->serial_num;
@@ -105,7 +121,6 @@ class OrdersController extends Controller
         $order->save();
 
         $this->controlCar($time, $serial_num);
-
 
 
         $car->update([

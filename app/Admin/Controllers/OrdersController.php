@@ -36,22 +36,6 @@ class OrdersController extends AdminController
         $grid = new Grid(new Order());
         Admin::style('.box-body{overflow:scroll;}');
 
-//        $grid->header(function ($query) {
-//            $days = [];
-//            $total = [];
-//
-//            for ($i = 0; $i < 7; $i++) {
-//                $day = Carbon::now()->addDays((-3 + $i))->toDateString();
-//                $data = \DB::table('orders')->where('paid_at', 'like', '%' . $day . '%')->sum('income');
-//                $day = substr($day,5);
-//                array_push($days, $day);
-//                array_push($total, $data);
-//            }
-//
-//
-//            $view = view('order.order', compact('total', 'days'));
-//            return new Box('收入详情', $view);
-//        });
         $grid->selector(function (Grid\Tools\Selector $selector) {
             $selector->select('status', '运营状态', [
                 0 => '完成',
@@ -59,6 +43,7 @@ class OrdersController extends AdminController
                 2 => '停止',
             ]);
         });
+
         $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
         $grid->column('id', __('Id值'));
         $grid->column('car', __('车辆名称'))->display(function () {

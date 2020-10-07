@@ -10,21 +10,21 @@ class AuthorizationsController extends Controller
 {
     public function store(AuthorizationRequest $request)
     {
+
         $credentials['phone'] = $request->phone;
         $credentials['password'] = $request->password;
+
         if (!\Auth::attempt($credentials)) {
             throw new AuthenticationException('用户异常');
         } else {
+            //查询后台用户
             $user = User::query()->where('phone', $request->phone)->first();
-
+            //生成token
             $token = auth('api')->login($user);
 
             return $this->responseWithToken($token);
         }
-
-
     }
-
 
     public function update()
     {
