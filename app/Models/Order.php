@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\dateTrait;
 use Illuminate\Database\Eloquent\Model;
-use DateTimeInterface;
-use Illuminate\Support\Carbon;
 
 class Order extends Model
 {
+    use dateTrait;
+
     protected $fillable = ['car_id', 'sell_item_id', 'no', 'income', 'left_time', 'paid_at', 'payment_no', 'status', 'pay_man'];
 
     protected $dates = ['paid_at'];
@@ -54,8 +55,4 @@ class Order extends Model
         return false;
     }
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
-    }
 }
