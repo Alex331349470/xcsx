@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use function Matrix\add;
 
 class TestsController extends Controller
 {
@@ -51,5 +52,17 @@ class TestsController extends Controller
         $change = hexdec($time);
 
         return $change;
+    }
+
+    public function pay()
+    {
+        $order = [
+            'out_trade_no' => time(),
+            'body' => 'subject-test',
+            'total_fee' => '1',
+            'openid' => 'otSh7szfR7tBPNcNzk45CgZUgdW4'
+        ];
+
+        $pay = app('wechat_pay')->mp($order);
     }
 }
