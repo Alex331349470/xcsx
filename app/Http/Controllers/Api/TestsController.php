@@ -61,5 +61,7 @@ class TestsController extends Controller
         ];
 
         $pay = app('wechat_pay')->mp($order);
+
+        return $pay;
     }
 }
