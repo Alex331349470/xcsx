@@ -14,6 +14,8 @@ class AuthorizationsController extends Controller
         $credentials['phone'] = $request->phone;
         $credentials['password'] = $request->password;
 
+        $user = session('wechat.oauth_user.default'); // 拿到授权用户
+        dd($user);
         if (!\Auth::attempt($credentials)) {
             throw new AuthenticationException('用户异常');
         } else {
