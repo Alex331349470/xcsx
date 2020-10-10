@@ -4,6 +4,7 @@ namespace App\Admin\Actions\Post;
 
 use App\Models\Car;
 use Encore\Admin\Actions\RowAction;
+use Encore\Admin\Admin;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -18,7 +19,9 @@ class QrCode extends RowAction
         $model->car_id = $request->get('car_id');
         $model->save();
 
-        return $this->response()->success('二维码生成成功')->refresh();
+        return $this->response()->success('车辆选择成功')->refresh();
+
+
     }
 
     public function form()

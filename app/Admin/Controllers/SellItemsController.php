@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\Pay;
 use App\Admin\Actions\Post\QrCode;
 use App\Models\Car;
 use App\Models\SellItem;
@@ -10,7 +11,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Admin;
-use GuzzleHttp\Client;
 
 class SellItemsController extends AdminController
 {
@@ -74,6 +74,7 @@ class SellItemsController extends AdminController
         });
         $grid->actions(function ($actions) {
             $actions->add(new QrCode);
+            $actions->add(new Pay);
         });
 
         $grid->disableExport();
