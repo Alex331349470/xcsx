@@ -23,7 +23,7 @@ Route::prefix('v1')
         Route::middleware('throttle:' . config('api.rate_limits.sign'))
             ->group(function () {
                 //登录
-                Route::middleware('wechat.oauth')->post('authorizations', 'AuthorizationsController@store')
+                Route::post('authorizations', 'AuthorizationsController@store')
                     ->name('authorization.store');
                 //刷新token
                 Route::put('authorizations/current', 'AuthorizationsController@update')
