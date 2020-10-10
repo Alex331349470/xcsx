@@ -52,16 +52,15 @@ class TestsController extends Controller
         return $change;
     }
 
-    public function pay()
+    public function pay(Request $request)
     {
         $order = [
             'out_trade_no' => time(),
             'body' => 'subject-test',
             'total_fee' => '1',
+            'openid' => 'otSh7szfR7tBPNcNzk45CgZUgdW4'
         ];
 
-        $pay = app('wechat_pay')->wap($order);
-
-        return $pay;
+       return $pay = app('wechat_pay')->mp($order);
     }
 }
