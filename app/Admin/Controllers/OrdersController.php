@@ -56,11 +56,11 @@ class OrdersController extends AdminController
             return $name;
         });
 
-        $grid->column('no', __('订单号'));
+//        $grid->column('no', __('订单号'));
         $grid->column('left_time', __('剩余时间'));
         $grid->column('income', __('收入'));
         $grid->column('paid_at', __('付款时间'));
-        $grid->column('payment_no', __('付款流水号'));
+//        $grid->column('payment_no', __('付款流水号'));
 
         $grid->column('status', __('订单状态'))->display(function ($value) {
             if ($value == 0) {
