@@ -14,7 +14,7 @@ class Pay extends RowAction
     {
         // $model ...
 
-        $openid = Admin::user()->openId;
+        $openid = (new \Encore\Admin\Admin)->user()->openId;
         $url = env('APP_URL').'/api/v1/test';
         $ch = curl_init();
 
