@@ -24,8 +24,7 @@ class Pay extends RowAction
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
-        $data = curl_exec($ch);
-        $data = json_decode($data, true);
+        $data = json_decode(curl_exec($ch),true);
         curl_close($ch);
 
 //
@@ -44,7 +43,7 @@ class Pay extends RowAction
 //                            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
 //                        }
 //                    });');
-        return $this->response()->success($data)->refresh();
+        return $this->response()->success($data['appId'])->refresh();
     }
 
 }
