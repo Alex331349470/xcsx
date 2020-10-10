@@ -52,7 +52,7 @@ class TestsController extends Controller
         return $change;
     }
 
-    public function pay(Request $request)
+    public function pay()
     {
         $order = [
             'out_trade_no' => time(),
