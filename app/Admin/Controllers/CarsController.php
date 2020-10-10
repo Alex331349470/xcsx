@@ -30,12 +30,12 @@ class CarsController extends AdminController
         $grid = new Grid(new Car());
         Admin::style('.box-body{overflow:scroll;}');
         $grid->column('id', __('Id'));
-        $grid->column('driver_school', __('所属驾校'))->display(function () {
-            $driverSchool = DriverSchool::query()->whereId($this->driver_school_id)->first();
-            return $driverSchool->name;
-        });
-
-        $grid->column('serial_num', __('车辆标识码'));
+//        $grid->column('driver_school', __('所属驾校'))->display(function () {
+//            $driverSchool = DriverSchool::query()->whereId($this->driver_school_id)->first();
+//            return $driverSchool->name;
+//        });
+//
+//        $grid->column('serial_num', __('车辆标识码'));
         $grid->column('name', __('车辆名称'));
         $grid->column('status', __('车辆状态'))->display(function ($value) {
             if ($value == 1) {
