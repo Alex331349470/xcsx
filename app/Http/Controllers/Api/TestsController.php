@@ -59,7 +59,6 @@ class TestsController extends Controller
     public function pay(Request $request)
     {
         $car_id = $request->car_id;
-        dd($car_id);
         $car = Car::query()->where('id',$car_id)->first();
         $sell_item_id = $request->sell_item_id;
         $sellItem = SellItem::query()->where('id',$sell_item_id)->first();
