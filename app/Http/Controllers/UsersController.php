@@ -11,4 +11,10 @@ class UsersController extends Controller
         $user = session('wechat.oauth_user.default'); // 拿到授权用户
         return "<h1>".$user['id']."</h1>";
     }
+
+    public function fake()
+    {
+        return view('fake');
+    }
+
 }

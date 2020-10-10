@@ -20,6 +20,8 @@ Route::post('payment/wechat/notify', 'ReturnsController@wechatNotify')
 
 Route::get('wechat/menu','WechatController@menu');
 
+Route::get('fake','UsersController@fake');
+
 Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
     Route::get('/user', 'UsersController@show')
         ->name('user.openid.show');
