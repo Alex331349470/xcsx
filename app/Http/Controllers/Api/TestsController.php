@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Car;
+use App\Models\DriverSchool;
+use App\Models\Order;
+use App\Models\SellItem;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 
 class TestsController extends Controller
@@ -51,17 +56,39 @@ class TestsController extends Controller
         return $change;
     }
 
-    public function pay()
+    public function pay(Request $request)
     {
-        $order = [
-            'out_trade_no' => time(),
-            'body' => 'subject-test',
-            'total_fee' => '1',
+        $car_id = $request->car_id;
+        dd($car_id);
+        $car = Car::query()->where('id',$car_id)->first();
+        $sell_item_id = $request->sell_item_id;
+        $sellItem = SellItem::query()->where('id',$sell_item_id)->first();
+
+        $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
+        $school_pinyin = pinyin_abbr($school_name);
+
+        if ($car->status == true) {
+            abort(403, '车辆正在使用中');
+        }
+
+        $order = Order::create([
+            'car_id' => $car->id,
+            'sell_item_id' => $sellItem->id,
+            'left_time' => $sellItem->time,
+            'income' => $sellItem->price,
+        ]);
+
+        $order->no = $school_pinyin . $order->no;
+
+        $order->save();
+
+        $wechatOrder = [
+            'out_trade_no' => $order->no,
+            'body' => '支付订单：' . $school_name . '-' . $order->no,
+            'total_fee' => $sellItem->price * 100,
             'openid' => 'otSh7szfR7tBPNcNzk45CgZUgdW4'
         ];
 
-        $pay = app('wechat_pay')->mp($order);
-
-        return $pay;
+        $pay = app('wechat_pay')->mp($wechatOrder);
     }
 }
