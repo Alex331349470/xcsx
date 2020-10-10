@@ -25,7 +25,7 @@ class Pay extends RowAction
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
         $data = curl_exec($ch);
-
+        $data = json_decode($data, true);
         curl_close($ch);
 
 //
