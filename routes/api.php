@@ -39,7 +39,7 @@ Route::prefix('v1')
                 Route::get('cars/{car}/sell_items/{sell_item}/payment', 'PaymentsController@payByWechat')
                     ->name('car.sell_item.payment');
                 //测试
-                Route::get('cars/{car}/sell_items/{sell_item}/test', 'TestsController@pay')
+                Route::get('test', 'TestsController@pay')
                     ->name('test');
                 //非Authorization的api
                 //用户信息
