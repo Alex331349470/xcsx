@@ -27,8 +27,8 @@ class WechatController extends Controller
             ]
         ];
 
-        $app->menu->create($menu);
-//        $app->menu->delete();
+//        $app->menu->create($menu);
+        $app->menu->delete();
         return $app->menu->list();
     }
 
