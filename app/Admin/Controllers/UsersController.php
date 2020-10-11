@@ -88,9 +88,6 @@ class UsersController extends AdminController
 
         $form->saving(function (Form $form){
             $form->password = bcrypt($form->password);
-
-            $user = session('wechat.oauth_user.default'); // 拿到授权用户
-            $form->openId = $user['id'];
         });
 
         return $form;
