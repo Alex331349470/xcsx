@@ -12,7 +12,7 @@ class CarStop extends RowAction
 
     public function handle(Model $model)
     {
-        $model->status = 1;
+        $model->status = 0;
         $model->save();
         $serial_num = $model->serial_num;
 
