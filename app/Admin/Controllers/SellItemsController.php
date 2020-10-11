@@ -76,7 +76,7 @@ class SellItemsController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->add(new QrCode);
-            $actions->add(new Pay);
+//            $actions->add(new Pay);
         });
 
         $grid->disableExport();
