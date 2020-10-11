@@ -9,12 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pay extends RowAction
 {
     public $name = '支付';
-    protected $wechat_data = [];
 
     public function handle(Model $model)
     {
-
-        $openid = (new \Encore\Admin\Admin)->user()->openId;
         $url = env('APP_URL') . '/api/v1/test';
         $ch = curl_init();
 
@@ -25,7 +22,6 @@ class Pay extends RowAction
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
         $data = json_decode(curl_exec($ch), true);
-        $this->wechat_data = $data;
 
         curl_close($ch);
 
@@ -33,33 +29,6 @@ class Pay extends RowAction
 
         return $this->response()->info('支付');
     }
-
-    protected function buildActionPromise()
-    {
-        return <<<SCRIPT
-        var process = new Promise(function (resolve,reject) {
-
-            Object.assign(data, {
-                _token: $.admin.token,
-                _action: '{$this->getCalledClass()}',
-            });
-
-            $.ajax({
-                method: 'GET',
-                url: '{$this->getHandleRoute()}',
-                data: data,
-                success: function (data) {
-                    resolve([data, target]);
-                },
-                error:function(request){
-                    reject(request);
-                }
-            });
-        });
-
-SCRIPT;
-    }
-
 
     public function resolveAction($data)
     {
