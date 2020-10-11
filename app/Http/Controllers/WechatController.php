@@ -23,7 +23,7 @@ class WechatController extends Controller
             [
                 "type" => "view",
                 "name" => "训练车系统",
-                "url" => "http://car.agelove.cn/fake"
+                "url" => "http://car.agelove.cn/admin"
             ]
         ];
 
