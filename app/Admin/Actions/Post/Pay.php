@@ -43,7 +43,7 @@ class Pay extends RowAction
                             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
                         }
                     });');
-        
+
         return $this->response()->info('支付');
     }
 
