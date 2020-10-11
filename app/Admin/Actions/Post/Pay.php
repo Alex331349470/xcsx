@@ -12,9 +12,6 @@ class Pay extends RowAction
 
     public function handle(Model $model)
     {
-        // $model ...
-
-        $openid = (new \Encore\Admin\Admin)->user()->openId;
         $url = env('APP_URL') . '/api/v1/test';
         $ch = curl_init();
 
@@ -24,7 +21,7 @@ class Pay extends RowAction
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
-        $data = json_decode(curl_exec($ch), true);
+        $data = curl_exec($ch);
         curl_close($ch);
 
 

@@ -71,7 +71,7 @@ class TestsController extends Controller
             'openid' => 'otSh7szfR7tBPNcNzk45CgZUgdW4'
         ];
 
-        $app->order->unify($order);
+        return $pay = $app->order->unify($order);
 
 //       return $pay = app('wechat_pay')->mp($order);
     }
