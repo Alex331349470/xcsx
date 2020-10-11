@@ -31,7 +31,7 @@ class Pay extends RowAction
 
         $this->resolveAction($data);
 
-//        return $this->response()->info('支付');
+        return $this->response()->info('支付');
     }
 
     protected function buildActionPromise()
