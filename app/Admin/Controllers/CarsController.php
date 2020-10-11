@@ -57,7 +57,6 @@ class CarsController extends AdminController
         });
 
         $grid->actions(function ($actions) {
-            $actions->disableShow();
             $actions->add(new CarStart);
             $actions->add(new CarStop);
         });
