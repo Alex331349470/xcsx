@@ -27,8 +27,6 @@ class Pay extends RowAction
 
         curl_close($ch);
 
-        Admin::script('console.log("hello world")');
-
         Admin::script('WeixinJSBridge.invoke(
                     \'getBrandWCPayRequest\', {
                         "appId": ' . $data['appId'] . ',     //公众号名称，由商户传入
@@ -45,7 +43,7 @@ class Pay extends RowAction
                             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
                         }
                     });');
-        return $this->response()->info('支付');
+        return $this->response()->info('支付')->send($data);
     }
 
     public function dialog()
