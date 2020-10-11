@@ -30,7 +30,6 @@ class SellItemsController extends AdminController
     {
         Admin::style('.box-body{overflow: scroll;}');
 
-        Admin::script('console.log(\'hello world\')');
         $grid = new Grid(new SellItem());
 
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
