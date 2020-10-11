@@ -64,7 +64,7 @@ return [
 
         'namespace' => 'App\\Admin\\Controllers',
 
-        'middleware' => ['web', 'admin', 'wechat.oauth'],
+        'middleware' => ['web', 'admin'],
     ],
 
     /*
