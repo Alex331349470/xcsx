@@ -74,6 +74,8 @@ class SellItemsController extends AdminController
             $filter->like('name', '套餐名称');
         });
         $grid->actions(function ($actions) {
+            $actions->disableDelete();
+            $actions->disableEdit();
             $actions->add(new QrCode);
             $actions->add(new Pay);
         });
