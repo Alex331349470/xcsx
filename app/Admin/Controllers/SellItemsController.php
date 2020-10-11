@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\Pay;
 use App\Admin\Actions\Post\QrCode;
+use App\Admin\Extensions\CheckMoney;
 use App\Models\Car;
 use App\Models\SellItem;
 use Encore\Admin\Controllers\AdminController;
@@ -73,6 +74,7 @@ class SellItemsController extends AdminController
             $filter->like('name', '套餐名称');
         });
         $grid->actions(function ($actions) {
+            $actions->append(new CheckMoney());
             $actions->disableDelete();
             $actions->disableEdit();
             $actions->add(new QrCode);
