@@ -86,7 +86,6 @@ Route::prefix('v1')
                     //订单续签
                     Route::post('orders/{order}/cars/{car}/start', 'OrdersController@start')
                         ->name('order.start');
-
                 });
             });
     });

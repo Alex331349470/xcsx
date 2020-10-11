@@ -58,11 +58,4 @@ SCRIPT;
 
         Admin::script($script);
     }
-
-
-    public function dialog()
-    {
-        $this->confirm('确定支付？');
-    }
-
 }
