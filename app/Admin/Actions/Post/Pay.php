@@ -32,6 +32,14 @@ class Pay extends RowAction
         return $this->response()->info('支付');
     }
 
+    public function html()
+    {
+        return <<<HTML
+        <a class="btn btn-sm btn-default import-post">支付</a>
+HTML;
+        Admin::script('console.log("hello world")');
+    }
+
     public function resolveAction($data)
     {
         $script = <<<SCRIPT
