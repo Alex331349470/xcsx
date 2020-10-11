@@ -10,7 +10,6 @@ Route::group([
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
     $router->get('/', 'OrdersController@orderList');
-    $router->middleware(['wechat.oauth'])->post('users','UsersController@create');
     $router->resource('users','UsersController');
     $router->resource('cars','CarsController');
     $router->resource('orders','OrdersController');
