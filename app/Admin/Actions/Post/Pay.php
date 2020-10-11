@@ -25,7 +25,7 @@ class Pay extends RowAction
         curl_close($ch);
 
 
-        return $this->response()->info('支付');
+        return $this->response()->info($data);
     }
 
 }
