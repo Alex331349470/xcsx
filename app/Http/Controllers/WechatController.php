@@ -22,13 +22,13 @@ class WechatController extends Controller
 
             [
                 "type" => "view",
-                "name" => "训练车系统",
-                "url" => "http://car.agelove.cn/admin"
+                "name" => "信息绑定码",
+                "url" => "http://car.agelove.cn/user"
             ]
         ];
 
-//        $app->menu->create($menu);
-        $app->menu->delete();
+        $app->menu->create($menu);
+//        $app->menu->delete();
         return $app->menu->list();
     }
 

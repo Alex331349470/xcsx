@@ -20,8 +20,6 @@ class QrCode extends RowAction
         $model->save();
 
         return $this->response()->success('车辆选择成功')->refresh();
-
-
     }
 
     public function form()
