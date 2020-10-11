@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\CarStart;
+use App\Admin\Actions\Post\CarStop;
 use App\Models\Car;
 use App\Models\DriverSchool;
 use Doctrine\DBAL\Driver;
@@ -52,6 +54,11 @@ class CarsController extends AdminController
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('name', '车辆名称');
+        });
+
+        $grid->actions(function ($actions) {
+            $actions->add(new CarStart);
+            $actions->add(new CarStop);
         });
 
         $grid->disableExport();
