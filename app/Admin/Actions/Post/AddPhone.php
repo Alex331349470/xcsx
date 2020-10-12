@@ -21,7 +21,7 @@ class AddPhone extends RowAction
 
         $devId = Car::query()->where('id',$model->car_id)->first()->serial_num;
         $this->controlCar($devId);
-        
+
         return $this->response()->success('手机号保存成功')->refresh();
     }
 
