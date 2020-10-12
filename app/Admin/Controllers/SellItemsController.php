@@ -37,9 +37,10 @@ class SellItemsController extends AdminController
             Admin::script('WeixinJSBridge.invoke(
                     \'getBrandWCPayRequest\', {
                         "appId": "' . md5($data->appId) . '",
-                        "timestamp":"' . $data->timeStamp . '",
+                        "timeStamp":"' . $data->timeStamp . '",
                         "nonceStr": "' . $data->nonceStr . '",
                         "package": "' . $data->package . '",
+                        "signType":"' . $data->signType . '",
                         "paySign":"' . $data->paySign . '"
                     },
                     function (res) {
