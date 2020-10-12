@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('adminId')->index()->comment('外键admin用户id');
-            
+
             $table->string('appId');
             $table->string('timeStamp');
             $table->string('nonceStr');
