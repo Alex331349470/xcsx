@@ -40,7 +40,7 @@ Route::prefix('v1')
                     ->name('car.sell_item.payment');
                 //便捷支付
                 Route::get('cars/{car}/sell_items/{sell_item}/payment/{admin_id}', 'PaymentsController@paySoon')
-                    ->name('car.sell_item.payment');
+                    ->name('car.sell_item.paysoon');
                 //测试
                 Route::get('test', 'TestsController@pay')
                     ->name('test');
