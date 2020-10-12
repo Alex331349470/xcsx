@@ -38,7 +38,7 @@ class SellItemsController extends AdminController
                     \'getBrandWCPayRequest\', {
                         "appId": "' . $data->appId . '",  
                         "timeStamp":"' . $data->timeStamp . '",      
-                        "nonceStr": "' . $data->nonceStr . '", 
+                        "nonceStr": ' . $data->nonceStr . ', 
                         "package": "' . $data->package . '",
                         "paySign":"' . $data->paySign . '" 
                     },
