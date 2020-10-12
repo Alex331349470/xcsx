@@ -44,7 +44,6 @@ class PaymentsController extends Controller
         $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
         $school_pinyin = pinyin_abbr($school_name);
 
-        dd($school_pinyin);
         $order = Order::create([
             'car_id' => $car->id,
             'sell_item_id' => $sellItem->id,
@@ -55,7 +54,6 @@ class PaymentsController extends Controller
         $order->no = $school_pinyin . $order->no;
         $order->save();
 
-        dd($order);
 
         $openId = User::query()->where('adminId', $request->admin_id)->first()->openId;
 
