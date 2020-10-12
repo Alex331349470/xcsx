@@ -33,18 +33,18 @@ class Pay extends RowAction
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
         $data = curl_exec($ch);
-//        $wcdata = json_decode($data, true);
+        $wcdata = json_decode($data, true);
         curl_close($ch);
 
-//        Item::create([
-//            'adminId' => \Auth::guard('admin')->user()->id,
-//            'appId' => $wcdata['appId'],
-//            'timeStamp' => $wcdata['timeStamp'],
-//            'nonceStr' => $wcdata['nonceStr'],
-//            'package' => $wcdata['package'],
-//            'signType' => $wcdata['signType'],
-//            'paySign' => $wcdata['paySign']
-//        ]);
+        Item::create([
+            'adminId' => \Auth::guard('admin')->user()->id,
+            'appId' => $wcdata['appId'],
+            'timeStamp' => $wcdata['timeStamp'],
+            'nonceStr' => $wcdata['nonceStr'],
+            'package' => $wcdata['package'],
+            'signType' => $wcdata['signType'],
+            'paySign' => $wcdata['paySign']
+        ]);
 
         return $this->response()->success($data)->refresh();
     }
