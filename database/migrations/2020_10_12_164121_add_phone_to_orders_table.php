@@ -14,7 +14,7 @@ class AddPhoneToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('phone')->comment('手机号');
+            $table->string('phone')->nullable()->comment('手机号');
         });
     }
 
