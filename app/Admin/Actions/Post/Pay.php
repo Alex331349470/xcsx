@@ -2,18 +2,26 @@
 
 namespace App\Admin\Actions\Post;
 
+use App\Models\Car;
 use App\Models\Item;
 use Encore\Admin\Actions\RowAction;
-use Encore\Admin\Admin;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Pay extends RowAction
 {
     public $name = '支付';
 
-    public function handle(Model $model)
+    public function handle(Model $model, Request $request)
     {
-        $url = env('APP_URL') . '/api/v1/test';
+        $car_id = $request->get('car_id');
+        $admin_id = \Auth::guard('admin')->user()->id;
+        $car = Car::query()->where('id', $car_id)->first();
+        if ($car->status == true) {
+            return $this->response()->warning('车辆正在使用中')->refresh();
+        }
+
+        $url = $url = env('APP_URL') . '/api/v1/cars/' . $car_id . '/sell_items/' . $model->id . '/payment/' . $admin_id;
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
@@ -36,6 +44,13 @@ class Pay extends RowAction
             'paySign' => $wcdata['paySign']
         ]);
 
-        return $this->response()->success('支付')->timeout(500)->refresh();
+        return $this->response()->success('支付')->refresh();
+    }
+
+    public function form()
+    {
+        $car_lv1 = Car::query()->get(['id', 'name'])->pluck('name', 'id');
+
+        $this->select('car_id', __('训练车名称'))->options($car_lv1);
     }
 }

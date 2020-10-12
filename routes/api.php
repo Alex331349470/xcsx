@@ -38,6 +38,9 @@ Route::prefix('v1')
                 //扫码支付
                 Route::get('cars/{car}/sell_items/{sell_item}/payment', 'PaymentsController@payByWechat')
                     ->name('car.sell_item.payment');
+                //便捷支付
+                Route::get('cars/{car}/sell_items/{sell_item}/payment/{admin_id}', 'PaymentsController@paySoon')
+                    ->name('car.sell_item.payment');
                 //测试
                 Route::get('test', 'TestsController@pay')
                     ->name('test');
