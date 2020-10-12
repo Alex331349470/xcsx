@@ -135,7 +135,7 @@ class SellItemsController extends AdminController
 
         $form->number('time', __('时间(秒)'));
         $form->text('name', __('套餐名称'));
-        $form->decimal('price', __('价格'))->default(0.00)->options(['max' => 10, 'min' => 1,'digits' => 2]);
+        $form->currency('price', __('价格'))->default(0.00);
 
         return $form;
     }
