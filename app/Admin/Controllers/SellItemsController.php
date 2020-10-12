@@ -30,7 +30,6 @@ class SellItemsController extends AdminController
     {
 //        $wechat_data = '';
         Admin::style('.box-body{overflow: scroll;}');
-
         $grid = new Grid(new SellItem());
 
 //        if ($wechat_data) {
