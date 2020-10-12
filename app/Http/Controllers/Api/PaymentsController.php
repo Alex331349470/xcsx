@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\DriverSchool;
-use Endroid\QrCode\QrCode;
+use App\Models\User;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\SellItem;
@@ -39,9 +39,8 @@ class PaymentsController extends Controller
         return response($wechatOrder->code_url, 200);
     }
 
-    public function paySoon(Car $car, SellItem $sellItem,Request $request)
+    public function paySoon(Car $car, SellItem $sellItem, Request $request)
     {
-        dd($car);
         $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
         $school_pinyin = pinyin_abbr($school_name);
 
@@ -55,13 +54,16 @@ class PaymentsController extends Controller
         $order->no = $school_pinyin . $order->no;
         $order->save();
 
+        $openId = User::query()->where('adminId', $request->admin_id)->first();
+
         $wechatOrder = app('wechat_pay')->scan([
             'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
             'body' => '支付订单：' . $school_name . '-' . $order->no,
+            'openid' => $openId,
         ]);
 
-        return response($wechatOrder->code_url, 200);
+        return $wechatOrder;
     }
 
 
