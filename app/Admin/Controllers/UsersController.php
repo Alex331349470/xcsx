@@ -88,7 +88,7 @@ class UsersController extends AdminController
 
         $form->saving(function (Form $form){
             $form->password = bcrypt($form->password);
-            $form->adminId = Admin::user()->id;
+            $form->adminId = (new \Encore\Admin\Admin)->user()->id;
         });
 
         return $form;
