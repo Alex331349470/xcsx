@@ -36,6 +36,7 @@ class SellItemsController extends AdminController
 
         if ($data = Item::query()->where('adminId',$adminId)->first()) {
             $this->resolveAction($data);
+            $data->delete();
         } else {
             Admin::script('console.log("hello")');
         }
