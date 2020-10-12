@@ -56,6 +56,8 @@ class PaymentsController extends Controller
         $order->no = $school_pinyin . $order->no;
         $order->save();
 
+        dd($order);
+
         $openId = User::query()->where('adminId', $request->admin_id)->first()->openId;
 
         $wechatOrder = app('wechat_pay')->mp([
