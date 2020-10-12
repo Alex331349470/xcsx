@@ -16,10 +16,11 @@ class Pay extends RowAction
     {
         $car_id = $request->get('car_id');
 //        $admin_id = \Auth::guard('admin')->user()->id;
-//        $car = Car::query()->where('id', $car_id)->first();
-//        if ($car->status == true) {
-//            return $this->response()->warning('车辆正在使用中')->refresh();
-//        }
+        $car = Car::query()->where('id', $car_id)->first();
+
+        if ($car->status == true) {
+            return $this->response()->warning('车辆正在使用中')->refresh();
+        }
 //
 //        $url = $url = env('APP_URL') . '/api/v1/cars/' . $car_id . '/sell_items/' . $model->id . '/payment/' . $admin_id;
 //        $ch = curl_init();
