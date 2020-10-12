@@ -28,9 +28,16 @@ class SellItemsController extends AdminController
      */
     protected function grid()
     {
+//        $wechat_data = '';
         Admin::style('.box-body{overflow: scroll;}');
 
         $grid = new Grid(new SellItem());
+
+//        if ($wechat_data) {
+//            $this->resolveAction($wechat_data);
+//        } else {
+//            Admin::script('console.log("hello")');
+//        }
 
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
             $item = SellItem::query()->where('id', $value)->first();
@@ -75,7 +82,7 @@ class SellItemsController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->add(new QrCode);
-            $actions->add(new Pay);
+//            $actions->add(new Pay);
         });
 
         $grid->disableExport();
@@ -117,5 +124,30 @@ class SellItemsController extends AdminController
         $form->decimal('price', __('价格'))->default(0.00);
 
         return $form;
+    }
+
+    public function resolveAction($data)
+    {
+        $script = <<<SCRIPT
+    WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', {
+                        "appId": {$data['appId']} ,     //公众号名称，由商户传入
+                        "timeStamp": {$data['timeStamp']},         //时间戳，自1970年以来的秒数
+                        "nonceStr": {$data['nonceStr']}, //随机串
+                        "package":' {$data['package']},
+                        "signType":{$data['signType']},         //微信签名方式：
+                        "paySign":{$data['paySign']} //微信签名
+                    },
+                    function (res) {
+                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                            console.log(res.err_msg)
+                            // 使用以上方式判断前端返回,微信团队郑重提示：
+                            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                        }
+                    });
+
+SCRIPT;
+
+        Admin::script($script);
     }
 }
