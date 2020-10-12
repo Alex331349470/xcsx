@@ -34,7 +34,6 @@ class SellItemsController extends AdminController
         $adminId = \Auth::guard('admin')->user()->id;
 
         if ($data = Item::query()->where('adminId', $adminId)->first()) {
-            dd($data);
 //            Admin::script('WeixinJSBridge.invoke(
 //                    \'getBrandWCPayRequest\', {
 //                        "appId": "' . md5($data->appId) . '",
