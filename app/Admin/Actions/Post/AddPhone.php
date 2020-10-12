@@ -4,24 +4,16 @@ namespace App\Admin\Actions\Post;
 
 use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class AddPhone extends RowAction
 {
     public $name = '手机号';
 
-    public function handle(Model $model,Request $request)
+    public function handle(Model $model)
     {
-        $phone = $request->get('phone');
-        $model->phone = $phone;
-        $model->save();
+        // $model ...
 
-        return $this->response()->success('添加手机号成功')->refresh();
-    }
-
-    public function form()
-    {
-        $this->text('phone', __('手机号'));
+        return $this->response()->success('Success message.')->refresh();
     }
 
 }
