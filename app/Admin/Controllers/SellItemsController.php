@@ -31,26 +31,26 @@ class SellItemsController extends AdminController
     {
         Admin::style('.box-body{overflow: scroll;}');
         $grid = new Grid(new SellItem());
-        $adminId = \Auth::guard('admin')->user()->id;
+//        $adminId = \Auth::guard('admin')->user()->id;
 
-        if ($data = Item::query()->where('adminId', $adminId)->first()) {
-            Admin::script('WeixinJSBridge.invoke(
-                    \'getBrandWCPayRequest\', {
-                        "appId": "' . $data->appId . '",  
-                        "timeStamp":"' . $data->timeStamp . '",      
-                        "nonceStr": "' . $data->nonceStr . '", 
-                        "package": "' . $data->package . '",
-                        "paySign":"' . $data->paySign . '" 
-                    },
-                    function (res) {
-                        if (res.err_msg == "get_brand_wcpay_request:ok") {
-                       
-                        }
-                    });');
-            $data->delete();
-        } else {
-            Admin::script('console.log("hello")');
-        }
+//        if ($data = Item::query()->where('adminId', $adminId)->first()) {
+//            Admin::script('WeixinJSBridge.invoke(
+//                    \'getBrandWCPayRequest\', {
+//                        "appId": "' . md5($data->appId) . '",  
+//                        "timestamp":"' . $data->timeStamp . '",
+//                        "nonceStr": "' . $data->nonceStr . '",
+//                        "package": "' . $data->package . '",
+//                        "paySign":"' . $data->paySign . '"
+//                    },
+//                    function (res) {
+//                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+//
+//                        }
+//                    });');
+//            $data->delete();
+//        } else {
+//            Admin::script('console.log("hello")');
+//        }
 
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
             $item = SellItem::query()->where('id', $value)->first();

@@ -22,20 +22,20 @@ class Pay extends RowAction
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
-        $data = json_decode(curl_exec($ch), true);
-
+        $data = curl_exec($ch);
+        $wcdata = json_decode($data, true);
         curl_close($ch);
 
         Item::create([
             'adminId' => \Auth::guard('admin')->user()->id,
-            'appId' => $data['appId'],
-            'timeStamp' => $data['timeStamp'],
-            'nonceStr' => $data['nonceStr'],
-            'package' => $data['package'],
-            'signType' => $data['signType'],
-            'paySign' => $data['paySign']
+            'appId' => $wcdata['appId'],
+            'timeStamp' => $wcdata['timeStamp'],
+            'nonceStr' => $wcdata['nonceStr'],
+            'package' => $wcdata['package'],
+            'signType' => $wcdata['signType'],
+            'paySign' => $wcdata['paySign']
         ]);
 
-        return $this->response()->info('微信支付')->refresh();
+        return $this->response()->success($data)->refresh();
     }
 }
