@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\AddPhone;
 use App\Admin\Actions\Post\Start;
 use App\Admin\Actions\Post\Stop;
 use App\Admin\Extensions\OrderExporter;
@@ -79,6 +80,7 @@ class OrdersController extends AdminController
         $grid->actions(function ($actions) {
             $actions->add(new Stop);
             $actions->add(new Start);
+            $actions->add(new AddPhone);
         });
 
         $grid->filter(function ($filter) {
