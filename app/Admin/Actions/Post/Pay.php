@@ -15,9 +15,7 @@ class Pay extends RowAction
     public function handle(Model $model, Request $request)
     {
         $car_id = $request->get('car_id');
-        if (!$car_id) {
-            return $this->response()->warning('请选择车辆')->refresh();
-        }
+       dd($car_id);
         $admin_id = \Auth::guard('admin')->user()->id;
         $car = Car::query()->where('id', $car_id)->first();
         if ($car->status == true) {
