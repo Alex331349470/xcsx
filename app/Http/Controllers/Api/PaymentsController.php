@@ -44,7 +44,6 @@ class PaymentsController extends Controller
         $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
         $school_pinyin = pinyin_abbr($school_name);
 
-        dd($school_name);
 
         $order = Order::create([
             'car_id' => $car->id,
