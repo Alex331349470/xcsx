@@ -41,7 +41,6 @@ class PaymentsController extends Controller
 
     public function paySoon(Car $car, SellItem $sellItem, Request $request)
     {
-        dd($request->admin_id);
         $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
         $school_pinyin = pinyin_abbr($school_name);
 
@@ -57,7 +56,7 @@ class PaymentsController extends Controller
 
         $openId = User::query()->where('adminId', $request->admin_id)->first();
 
-        $wechatOrder = app('wechat_pay')->scan([
+        $wechatOrder = app('wechat_pay')->mp([
             'out_trade_no' => $order->no,
             'total_fee' => $sellItem->price * 100,
             'body' => '支付订单：' . $school_name . '-' . $order->no,
