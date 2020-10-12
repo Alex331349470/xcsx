@@ -83,12 +83,12 @@ class UsersController extends AdminController
         $form->mobile('phone', __('手机号'));
         $form->email('email', __('邮箱地址'));
         $form->text('address', __('运营地址'));
+        $form->text('adminId',__('用户平台ID'));
         $form->text('openId',__('收款信息码绑定'));
         $form->password('password', __('密码'));
 
-        $form->saving(function (Form $form){
+        $form->saving(function (Form $form) {
             $form->password = bcrypt($form->password);
-            $form->adminId = \Auth::guard('admin')->user()->id;
         });
 
         return $form;

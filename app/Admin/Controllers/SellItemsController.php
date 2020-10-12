@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Actions\Post\Pay;
 use App\Admin\Actions\Post\QrCode;
 use App\Models\Car;
+use App\Models\Item;
 use App\Models\SellItem;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -31,12 +32,13 @@ class SellItemsController extends AdminController
 //        $wechat_data = '';
         Admin::style('.box-body{overflow: scroll;}');
         $grid = new Grid(new SellItem());
+        $adminId = \Auth::guard('admin')->user()->id;
 
-//        if ($wechat_data) {
-//            $this->resolveAction($wechat_data);
-//        } else {
-//            Admin::script('console.log("hello")');
-//        }
+        if ($data = Item::query()->where('adminId',$adminId)->first()) {
+            $this->resolveAction($data);
+        } else {
+            Admin::script('console.log("hello")');
+        }
 
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
             $item = SellItem::query()->where('id', $value)->first();
@@ -130,12 +132,12 @@ class SellItemsController extends AdminController
         $script = <<<SCRIPT
     WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
-                        "appId": {$data['appId']} ,     //公众号名称，由商户传入
-                        "timeStamp": {$data['timeStamp']},         //时间戳，自1970年以来的秒数
-                        "nonceStr": {$data['nonceStr']}, //随机串
-                        "package":' {$data['package']},
-                        "signType":{$data['signType']},         //微信签名方式：
-                        "paySign":{$data['paySign']} //微信签名
+                        "appId": {$data->appId} ,     //公众号名称，由商户传入
+                        "timeStamp": {$data->timeStamp},         //时间戳，自1970年以来的秒数
+                        "nonceStr": {$data->nonceStr}, //随机串
+                        "package":' {$data->package},
+                        "signType":{$data->signType},         //微信签名方式：
+                        "paySign":{$data->paySign} //微信签名
                     },
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
