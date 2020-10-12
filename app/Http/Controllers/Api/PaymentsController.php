@@ -41,7 +41,7 @@ class PaymentsController extends Controller
 
     public function paySoon(Car $car, SellItem $sellItem, Request $request)
     {
-        dd($car);
+        dd($sellItem);
         $school_name = DriverSchool::query()->where('id', $car->driver_school_id)->first()->name;
         $school_pinyin = pinyin_abbr($school_name);
 
