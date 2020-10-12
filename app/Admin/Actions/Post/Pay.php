@@ -36,6 +36,6 @@ class Pay extends RowAction
             'paySign' => $wcdata['paySign']
         ]);
 
-        return $this->response()->success($data)->timeout(1000000)->refresh();
+        return $this->response()->success('支付')->timeout(10000)->refresh();
     }
 }
