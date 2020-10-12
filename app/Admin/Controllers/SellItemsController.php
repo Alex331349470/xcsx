@@ -34,7 +34,7 @@ class SellItemsController extends AdminController
         $grid = new Grid(new SellItem());
         $adminId = \Auth::guard('admin')->user()->id;
 
-        if ($data = Item::query()->where('adminId',$adminId)->first()) {
+        if ($data = Item::query()->where('adminId', $adminId)->first()) {
             $this->resolveAction($data);
             $data->delete();
         } else {
@@ -48,13 +48,13 @@ class SellItemsController extends AdminController
                 return '请选择好训练车辆';
             }
 
-            if (Car::query()->where('id',$item->car_id)->first()->status == 1) {
+            if (Car::query()->where('id', $item->car_id)->first()->status == 1) {
                 $item->car_id = null;
                 $item->save();
                 return '该车辆正在使用中';
             }
 
-            $url = env('APP_URL').'/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
+            $url = env('APP_URL') . '/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
@@ -136,7 +136,7 @@ class SellItemsController extends AdminController
                         "appId": {$data->appId} ,     //公众号名称，由商户传入
                         "timeStamp": {$data->timeStamp},         //时间戳，自1970年以来的秒数
                         "nonceStr": {$data->nonceStr}, //随机串
-                        "package":' {$data->package},
+                        "package": {$data->package},
                         "signType":{$data->signType},         //微信签名方式：
                         "paySign":{$data->paySign} //微信签名
                     },
