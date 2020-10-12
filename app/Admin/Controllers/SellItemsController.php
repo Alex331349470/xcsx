@@ -31,9 +31,10 @@ class SellItemsController extends AdminController
     {
         Admin::style('.box-body{overflow: scroll;}');
         $grid = new Grid(new SellItem());
-//        $adminId = \Auth::guard('admin')->user()->id;
+        $adminId = \Auth::guard('admin')->user()->id;
 
-//        if ($data = Item::query()->where('adminId', $adminId)->first()) {
+        if ($data = Item::query()->where('adminId', $adminId)->first()) {
+            dd($data);
 //            Admin::script('WeixinJSBridge.invoke(
 //                    \'getBrandWCPayRequest\', {
 //                        "appId": "' . md5($data->appId) . '",
@@ -47,10 +48,10 @@ class SellItemsController extends AdminController
 //
 //                        }
 //                    });');
-//            $data->delete();
-//        } else {
-//            Admin::script('console.log("hello")');
-//        }
+            $data->delete();
+        } else {
+            Admin::script('console.log("hello")');
+        }
 
         $grid->column('id', __('支付码-ID'))->qrcode(function ($value) {
             $item = SellItem::query()->where('id', $value)->first();
