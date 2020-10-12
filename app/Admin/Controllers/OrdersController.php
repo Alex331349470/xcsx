@@ -85,7 +85,7 @@ class OrdersController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
-            $filter->like('no', '订单号');
+            $filter->like('phone', '手机号');
             $filter->between('paid_at','付款时间')->datetime();
         });
 
