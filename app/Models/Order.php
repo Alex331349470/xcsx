@@ -9,7 +9,7 @@ class Order extends Model
 {
     use dateTrait;
 
-    protected $fillable = ['car_id', 'sell_item_id', 'no', 'income', 'left_time', 'paid_at', 'payment_no', 'status', 'pay_man'];
+    protected $fillable = ['car_id', 'sell_item_id', 'no', 'income', 'left_time', 'paid_at', 'payment_no', 'status', 'pay_man','phone'];
 
     protected $dates = ['paid_at'];
 
