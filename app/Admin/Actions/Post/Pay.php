@@ -33,7 +33,7 @@ class Pay extends RowAction
     public function resolveAction($data)
     {
         $script = <<<SCRIPT
-    WeixinJSBridge.invoke(
+              WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
                         "appId": {$data['appId']} ,     //公众号名称，由商户传入
                         "timeStamp": {$data['timeStamp']},         //时间戳，自1970年以来的秒数
@@ -49,7 +49,6 @@ class Pay extends RowAction
                             //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
                         }
                     });
-
 SCRIPT;
 
         Admin::script($script);
