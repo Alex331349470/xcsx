@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\CarStart;
 use App\Admin\Actions\Post\CarStop;
+use App\Admin\Actions\Post\Replicate;
 use App\Models\Car;
 use App\Models\DriverSchool;
 use Doctrine\DBAL\Driver;
@@ -59,6 +60,7 @@ class CarsController extends AdminController
         $grid->actions(function ($actions) {
             $actions->add(new CarStart);
             $actions->add(new CarStop);
+            $actions->add(new Replicate);
         });
 
         $grid->disableExport();
