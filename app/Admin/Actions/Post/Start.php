@@ -16,8 +16,13 @@ class Start extends RowAction
 
     public function handle(Model $model)
     {
+
         $time = $model->left_time;
         $car = Car::query()->where('id', $model->car_id)->first();
+        
+        if ($car->status == true) {
+            return $this->response()->warning('车辆正在使用中')->refresh();
+        }
         $serial_num = $car->serial_num;
         $model->status = 1;
         $model->save();
