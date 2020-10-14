@@ -42,7 +42,7 @@ Route::prefix('v1')
                 Route::get('cars/{car}/sell_items/{sell_item}/payment/{admin_id}', 'PaymentsController@paySoon')
                     ->name('car.sell_item.paySoon');
                 //测试
-                Route::get('test', 'TestsController@pay')
+                Route::get('test', 'TestsController@test')
                     ->name('test');
 
                 //非Authorization的api

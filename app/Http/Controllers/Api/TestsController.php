@@ -47,7 +47,7 @@ class TestsController extends Controller
 
         return $msg;
 
-        
+
 //        $time = substr($msg['msg'],4,4);
 //
 //        $change = hexdec($time);
