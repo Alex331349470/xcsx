@@ -12,6 +12,10 @@ class CarStart extends RowAction
 
     public function handle(Model $model)
     {
+        if ($model->status == 1) {
+            return $this->response()->warning('车辆正在开启中')->refresh();
+        }
+
         $model->status = 1;
         $model->save();
         $serial_num = $model->serial_num;
