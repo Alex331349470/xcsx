@@ -30,13 +30,15 @@ class Replicate extends RowAction
 
         $ws->close();
 
-        if ($message->msg) {
-            return $this->response()->success('设备在线')->refresh();
+        return $this->response()->success($message)->refresh();
 
-        } else {
-            return $this->response()->error('设备未在线')->refresh();
-
-        }
+//        if ($message->msg) {
+//            return $this->response()->success('设备在线')->refresh();
+//
+//        } else {
+//            return $this->response()->error('设备未在线')->refresh();
+//
+//        }
     }
 
 }
