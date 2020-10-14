@@ -19,7 +19,8 @@ class Start extends RowAction
 
         $time = $model->left_time;
 
-        if ($time == 0){
+        if ($time == 0) {
+            $model->status = 0;
             return $this->response()->warning('此单时间为0')->refresh();
         }
         $car = Car::query()->where('id', $model->car_id)->first();
