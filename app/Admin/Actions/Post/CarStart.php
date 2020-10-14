@@ -18,7 +18,6 @@ class CarStart extends RowAction
 
         $this->controlCar($serial_num);
 
-
         return $this->response()->success('车辆开启成功')->refresh();
     }
 
@@ -37,5 +36,4 @@ class CarStart extends RowAction
             ]
         ]);
     }
-
 }

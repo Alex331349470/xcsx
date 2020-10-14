@@ -27,7 +27,6 @@ class AddPhone extends RowAction
 
     public function form()
     {
-
         $this->text('phone', __('手机号'));
     }
 
