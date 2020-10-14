@@ -32,12 +32,12 @@ class Replicate extends RowAction
 
         $check = json_decode($message, true);
 
-        if ($check['msg']) {
-            return $this->response()->success('设备在线')->refresh();
-
-        } else {
+        try{
+            if ($check['msg']) {
+                return $this->response()->success('设备在线')->refresh();
+            }
+        }catch (\Exception $e) {
             return $this->response()->error('设备未在线')->refresh();
-
         }
     }
 }
