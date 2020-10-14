@@ -28,7 +28,7 @@ class TestsController extends Controller
 //
 //        $officialAccount->template_message->send($sub_data);
 
-        $serial_num = '32075';
+        $serial_num = '32082';
         $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id='.$serial_num.'&member_id=319');
 
         $client = new Client();
