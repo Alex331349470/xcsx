@@ -17,6 +17,10 @@ class Stop extends RowAction
     {
         $car = Car::query()->where('id', $model->car_id)->first();
 
+        if ($car->status == 0) {
+            return $this->response()->warning('该车已停止')->refresh();
+        }
+
         $serial_num = $car->serial_num;
 
         $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
