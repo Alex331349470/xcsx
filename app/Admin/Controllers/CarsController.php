@@ -49,34 +49,34 @@ class CarsController extends AdminController
             }
         });
 
-        $grid->column('lim_status',__('在线状态'))->display(function (){
-            try{
-                $serial_num = $this->serial_num;
-
-                $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
-
-                $client = new Client();
-
-                $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
-                    'query' => [
-                        'us_id' => env('CAR_US_ID'),
-                        'openid' => env('CAR_OPEN_ID'),
-                        'dev_id' => $serial_num,
-                        'msg' => 'd100'
-                    ]
-                ]);
-                $message = $ws->receive();
-
-                $ws->close();
-
-                $msg = json_decode($message, true);
-                if ($msg['msg']) {
-                    return "<div style='color: green'>在线</div>";
-                }
-            } catch (\Exception $exception){
-                return "<div style='color: red'>未在线</div>";
-            }
-        });
+//        $grid->column('lim_status',__('在线状态'))->display(function (){
+//            try{
+//                $serial_num = $this->serial_num;
+//
+//                $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
+//
+//                $client = new Client();
+//
+//                $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+//                    'query' => [
+//                        'us_id' => env('CAR_US_ID'),
+//                        'openid' => env('CAR_OPEN_ID'),
+//                        'dev_id' => $serial_num,
+//                        'msg' => 'd100'
+//                    ]
+//                ]);
+//                $message = $ws->receive();
+//
+//                $ws->close();
+//
+//                $msg = json_decode($message, true);
+//                if ($msg['msg']) {
+//                    return "<div style='color: green'>在线</div>";
+//                }
+//            } catch (\Exception $exception){
+//                return "<div style='color: red'>未在线</div>";
+//            }
+//        });
 
         $grid->column('start', __('开始时间'));
         $grid->column('end', __('结束时间'));
