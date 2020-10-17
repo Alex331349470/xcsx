@@ -71,10 +71,10 @@ class CarsController extends AdminController
 
                 $msg = json_decode($message, true);
                 if ($msg['msg']) {
-                    return '在线';
+                    return "<div style='color: green'>在线</div>";
                 }
             } catch (\Exception $exception){
-                return '未在线';
+                return "<div style='color: red'>未在线</div>";
             }
         });
 
