@@ -12,6 +12,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Admin;
+use GuzzleHttp\Client;
 
 class SellItemsController extends AdminController
 {
@@ -59,30 +60,75 @@ class SellItemsController extends AdminController
             if ($item->car_id == null) {
                 return '请选择好训练车辆';
             }
+            $car = Car::query()->where('id', $item->car_id)->first();
 
-            if (Car::query()->where('id', $item->car_id)->first()->status == 1) {
+            if ($car->status == 1) {
                 $item->car_id = null;
                 $item->save();
                 return '该车辆正在使用中';
             }
 
-            $url = env('APP_URL') . '/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
-            $ch = curl_init();
+            try {
+                $serial_num = $car->serial_num;
 
-            curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
-            $data = curl_exec($ch);
-            curl_close($ch);
+                $client = new Client();
 
-            $item->car_id = null;
-            $item->save();
+                $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+                    'query' => [
+                        'us_id' => env('CAR_US_ID'),
+                        'openid' => env('CAR_OPEN_ID'),
+                        'dev_id' => $serial_num,
+                        'msg' => 'd100'
+                    ]
+                ]);
+                $message = $ws->receive();
+
+                $ws->close();
+
+                $msg = json_decode($message, true);
+
+                if ($msg['msg']) {
+                    $url = env('APP_URL') . '/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
+                    $ch = curl_init();
+
+                    curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+
+                    $data = curl_exec($ch);
+                    curl_close($ch);
+
+                    $item->car_id = null;
+                    $item->save();
 
 
-            return $data;
+                    return $data;
+                }
+            } catch (\Exception $exception) {
+                return '设备未在线';
+            }
+
+//            $url = env('APP_URL') . '/api/v1/cars/' . $item->car_id . '/sell_items/' . $value . '/payment ';
+//            $ch = curl_init();
+//
+//            curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+//            curl_setopt($ch, CURLOPT_HEADER, 0);
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//            curl_setopt($ch, CURLOPT_URL, $url);
+//            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+//
+//            $data = curl_exec($ch);
+//            curl_close($ch);
+//
+//            $item->car_id = null;
+//            $item->save();
+//
+//
+//            return $data;
         });
 
         $grid->column('time', __('时间(秒)'));
