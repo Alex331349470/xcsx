@@ -109,6 +109,8 @@ class SellItemsController extends AdminController
                         return $data;
                     }
                 } catch (\Exception $exception) {
+                    $item->car_id = null;
+                    $item->save();
                     return '设备未在线';
                 }
             }
