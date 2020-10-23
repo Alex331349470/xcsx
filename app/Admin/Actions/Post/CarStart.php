@@ -36,7 +36,7 @@ class CarStart extends RowAction
 //                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
                     'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
                     'data' => [
-                        'first' => '车辆故障暂停',
+                        'first' => '车辆状态',
                         'event' => ['value' => $model->name . '处于常开状态', 'color' => '#FF0000'],
                         'finish_time' => Carbon::now()->toDateTimeString(),
                         'remark' => '该车处于常开状态，请知悉！',

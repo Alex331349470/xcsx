@@ -86,7 +86,7 @@ class Pay extends RowAction
 //                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
                         'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
                         'data' => [
-                            'first' => '车辆故障暂停',
+                            'first' => '车辆状态',
                             'event' => ['value' => $car->name . '未在线', 'color' => '#FF0000'],
                             'finish_time' => Carbon::now()->toDateTimeString(),
                             'remark' => '该车辆处于未在线状态，请及时修复！',
