@@ -4,6 +4,8 @@ namespace App\Admin\Actions\Post;
 
 use App\Models\Car;
 use App\Models\Item;
+use App\Models\User;
+use Carbon\Carbon;
 use Encore\Admin\Actions\RowAction;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -72,6 +74,28 @@ class Pay extends RowAction
                 return $this->response()->success('支付')->refresh();
             }
         } catch (\Exception $exception) {
+            $officialAccount = \EasyWeChat::officialAccount();
+
+            $users = User::all();
+
+            foreach ($users as $user) {
+
+                if ($openId = $user->openId) {
+                    $sub_data = [
+                        'touser' => $openId,
+//                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+                        'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
+                        'data' => [
+                            'first' => '车辆故障暂停',
+                            'event' => ['value' => $car->name . '未在线', 'color' => '#FF0000'],
+                            'finish_time' => Carbon::now()->toDateTimeString(),
+                            'remark' => '该车辆处于未在线状态，请及时修复！',
+                        ],
+                    ];
+
+                    $officialAccount->template_message->send($sub_data);
+                }
+            }
             return $this->response()->error('设备未在线')->refresh();
         }
 //        $admin_id = \Auth::guard('admin')->user()->id;

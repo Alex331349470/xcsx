@@ -2,6 +2,8 @@
 
 namespace App\Admin\Actions\Post;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Encore\Admin\Actions\RowAction;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +23,29 @@ class CarStart extends RowAction
         $serial_num = $model->serial_num;
 
         $this->controlCar($serial_num);
+
+        $officialAccount = \EasyWeChat::officialAccount();
+
+        $users = User::all();
+
+        foreach ($users as $user) {
+
+            if ($openId = $user->openId) {
+                $sub_data = [
+                    'touser' => $openId,
+//                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+                    'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
+                    'data' => [
+                        'first' => '车辆故障暂停',
+                        'event' => ['value' => $model->name . '处于常开状态', 'color' => '#FF0000'],
+                        'finish_time' => Carbon::now()->toDateTimeString(),
+                        'remark' => '该车处于常开状态，请知悉！',
+                    ],
+                ];
+
+                $officialAccount->template_message->send($sub_data);
+            }
+        }
 
         return $this->response()->success('车辆开启成功')->refresh();
     }

@@ -7,6 +7,8 @@ use App\Admin\Actions\Post\QrCode;
 use App\Models\Car;
 use App\Models\Item;
 use App\Models\SellItem;
+use App\Models\User;
+use Carbon\Carbon;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -111,6 +113,29 @@ class SellItemsController extends AdminController
                 } catch (\Exception $exception) {
                     $item->car_id = null;
                     $item->save();
+
+                    $officialAccount = \EasyWeChat::officialAccount();
+
+                    $users = User::all();
+
+                    foreach ($users as $user) {
+
+                        if ($openId = $user->openId) {
+                            $sub_data = [
+                                'touser' => $openId,
+//                    'touser' => 'otSh7szfR7tBPNcNzk45CgZUgdW4',
+                                'template_id' => '28JqHbTcIMEHHS7JMkYyLp-zUQhWorLv1SADPcPVXJg',
+                                'data' => [
+                                    'first' => '车辆故障暂停',
+                                    'event' => ['value' =>  $car->name . '未在线', 'color' => '#FF0000'],
+                                    'finish_time' => Carbon::now()->toDateTimeString(),
+                                    'remark' => '该车辆处于未在线状态,请及时检修!',
+                                ],
+                            ];
+
+                            $officialAccount->template_message->send($sub_data);
+                        }
+                    }
                     return '设备未在线';
                 }
             }
