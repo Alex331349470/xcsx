@@ -19,7 +19,7 @@ class QrCode extends RowAction
         $model->car_id = $request->get('car_id');
         $model->save();
 
-        return $this->response()->info('二维码生成中')->timeout(8000)->refresh();
+        return $this->response()->warning('二维码生成中,请勿操作')->timeout(8000)->refresh();
 
     }
 
