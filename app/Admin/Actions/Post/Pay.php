@@ -5,6 +5,7 @@ namespace App\Admin\Actions\Post;
 use App\Models\Car;
 use App\Models\Item;
 use Encore\Admin\Actions\RowAction;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -20,33 +21,86 @@ class Pay extends RowAction
         if ($car->status == true) {
             return $this->response()->warning('车辆正在使用中')->refresh();
         }
+        try {
+            $serial_num = $car->serial_num;
 
-        $admin_id = \Auth::guard('admin')->user()->id;
+            $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
-        $url = $url = env('APP_URL') . '/api/v1/cars/' . $car_id . '/sell_items/' . $model->id . '/payment/' . $admin_id;
-        $ch = curl_init();
+            $client = new Client();
 
-        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+            $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+                'query' => [
+                    'us_id' => env('CAR_US_ID'),
+                    'openid' => env('CAR_OPEN_ID'),
+                    'dev_id' => $serial_num,
+                    'msg' => 'd100'
+                ]
+            ]);
+            $message = $ws->receive();
 
-        $data = curl_exec($ch);
-        $wcdata = json_decode($data, true);
-        curl_close($ch);
+            $ws->close();
 
-        Item::create([
-            'adminId' => \Auth::guard('admin')->user()->id,
-            'appId' => $wcdata['appId'],
-            'timeStamp' => $wcdata['timeStamp'],
-            'nonceStr' => $wcdata['nonceStr'],
-            'package' => $wcdata['package'],
-            'signType' => $wcdata['signType'],
-            'paySign' => $wcdata['paySign']
-        ]);
+            $msg = json_decode($message, true);
 
-        return $this->response()->success('支付')->refresh();
+            if ($msg['msg']) {
+                $admin_id = \Auth::guard('admin')->user()->id;
+
+                $url = $url = env('APP_URL') . '/api/v1/cars/' . $car_id . '/sell_items/' . $model->id . '/payment/' . $admin_id;
+
+                $ch = curl_init();
+
+                curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+
+                $data = curl_exec($ch);
+                $wcdata = json_decode($data, true);
+                curl_close($ch);
+
+                Item::create([
+                    'adminId' => \Auth::guard('admin')->user()->id,
+                    'appId' => $wcdata['appId'],
+                    'timeStamp' => $wcdata['timeStamp'],
+                    'nonceStr' => $wcdata['nonceStr'],
+                    'package' => $wcdata['package'],
+                    'signType' => $wcdata['signType'],
+                    'paySign' => $wcdata['paySign']
+                ]);
+
+                return $this->response()->success('支付')->refresh();
+            }
+        } catch (\Exception $exception) {
+            return $this->response()->error('设备未在线')->refresh();
+        }
+//        $admin_id = \Auth::guard('admin')->user()->id;
+//
+//        $url = $url = env('APP_URL') . '/api/v1/cars/' . $car_id . '/sell_items/' . $model->id . '/payment/' . $admin_id;
+//
+//        $ch = curl_init();
+//
+//        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+//        curl_setopt($ch, CURLOPT_HEADER, 0);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+//
+//        $data = curl_exec($ch);
+//        $wcdata = json_decode($data, true);
+//        curl_close($ch);
+//
+//        Item::create([
+//            'adminId' => \Auth::guard('admin')->user()->id,
+//            'appId' => $wcdata['appId'],
+//            'timeStamp' => $wcdata['timeStamp'],
+//            'nonceStr' => $wcdata['nonceStr'],
+//            'package' => $wcdata['package'],
+//            'signType' => $wcdata['signType'],
+//            'paySign' => $wcdata['paySign']
+//        ]);
+//
+//        return $this->response()->success('支付')->refresh();
     }
 
     public function form()
