@@ -63,7 +63,7 @@ class TestsController extends Controller
 //                    'msg' => 'd100'
 //                ]
 //            ]);
-//            $message = $ws->receive();
+            $message = $ws->receive();
 
             $ws->close();
 
