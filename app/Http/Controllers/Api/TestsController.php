@@ -53,25 +53,25 @@ class TestsController extends Controller
 
             $ws = new \WebSocket\Client('wss://mobi.ydsyb123.com:8282/?dev_id=' . $serial_num . '&member_id=319');
 
-            $client = new Client();
-
-            $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
-                'query' => [
-                    'us_id' => env('CAR_US_ID'),
-                    'openid' => env('CAR_OPEN_ID'),
-                    'dev_id' => $serial_num,
-                    'msg' => 'd100'
-                ]
-            ]);
-            $message = $ws->receive();
+//            $client = new Client();
+//
+//            $client->get('https://mobi.ydsyb123.com/api/send2sb.php', [
+//                'query' => [
+//                    'us_id' => env('CAR_US_ID'),
+//                    'openid' => env('CAR_OPEN_ID'),
+//                    'dev_id' => $serial_num,
+//                    'msg' => 'd100'
+//                ]
+//            ]);
+//            $message = $ws->receive();
 
             $ws->close();
 
-            $msg = json_decode($message, true);
-
-            if ($msg['msg']) {
+//            $msg = json_decode($message, true);
+//
+//            if ($msg['msg']) {
                 return 'online';
-            }
+//            }
         } catch (\Exception $exception) {
             return 'offline';
         }
