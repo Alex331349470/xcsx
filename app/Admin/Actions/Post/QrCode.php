@@ -19,7 +19,7 @@ class QrCode extends RowAction
         $model->car_id = $request->get('car_id');
         $model->save();
 
-        return $this->response()->success('车辆选择成功')->refresh();
+        return $this->response()->success('二维码生成中')->refresh();
 
     }
 
