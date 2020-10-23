@@ -63,17 +63,17 @@ class TestsController extends Controller
                     'msg' => 'd100'
                 ]
             ]);
-//            $message = $ws->receive();
+            $message = $ws->receive();
 
             $ws->close();
 
-//            $msg = json_decode($message, true);
-//
-//            if ($msg['msg']) {
-//                return $this->response()->success('设备在线')->refresh();
-//            }
+            $msg = json_decode($message, true);
+
+            if ($msg['msg']) {
+                return 'online';
+            }
         } catch (\Exception $exception) {
-            return $this->response()->error('设备未在线')->refresh();
+            return 'offline';
         }
 
 
